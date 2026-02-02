@@ -3,7 +3,7 @@ import React from 'react';
 const Home = () => {
   return (
     <div style={{ fontFamily: 'Arial, sans-serif', color: '#333' }}>
-      {/* Hero Section */}
+      {}
       <header style={{ padding: '60px 20px', textAlign: 'center', backgroundColor: '#f0fdfa' }}>
         <h1 style={{ color: '#00d09c', fontSize: '2.5rem' }}>Doctor Plus+</h1>
         <h2 style={{ fontSize: '1.8rem' }}>Find Trusted Doctors</h2>
@@ -11,7 +11,7 @@ const Home = () => {
           Book appointments with the best doctors in your area. Secure, fast, and easy to use.
         </p>
         
-        {/* Search Bar (Figma Page 15/17) */}
+        {}
         <div style={{ marginTop: '30px' }}>
           <input 
             type="text" 
@@ -38,7 +38,7 @@ const Home = () => {
         </div>
       </header>
 
-      {/* Specialty Sections (Figma Page 6) */}
+      {}
       <section style={{ padding: '40px 20px', textAlign: 'center' }}>
         <h3>Popular Specialties</h3>
         <div style={{ display: 'flex', justifyContent: 'center', gap: '20px', marginTop: '20px' }}>
