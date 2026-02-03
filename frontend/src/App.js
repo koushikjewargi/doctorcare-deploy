@@ -5,6 +5,7 @@ import LoginPage from './Frontend/Containers/LoginPage';
 import OtpPage from './Frontend/Containers/OtpPage';
 import SignupPage from './Frontend/Containers/SignupPage';
 import ForgotPassword from './Frontend/Containers/ForgotPassword';
+import ResetPassword from './Frontend/Containers/ResetPassword';
 
 function App() {
   return (
@@ -15,6 +16,7 @@ function App() {
         <Route path="/otp" element={<OtpPage />} />
         <Route path="/signup" element={<SignupPage />} />
         <Route path="/forgot-password" element={<ForgotPassword />} />
+        <Route path="/reset-password" element={<ResetPassword />} />
       </Routes>
     </Router>
   );

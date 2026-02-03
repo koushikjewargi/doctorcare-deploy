@@ -23,7 +23,7 @@ const OtpPage = () => {
     const finalOtp = otp.join('');
     if (finalOtp === "1234") {
       alert("Verification Successful!");
-      navigate('/'); 
+      navigate('/reset-password'); 
     } else {
       alert("Invalid OTP. Try 1234");
     }
