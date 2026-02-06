@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="./styles.css">
+</head>
+<body class="center">
+
+<h2>✅ Booking Successful</h2>
+<p>Your appointment is confirmed.</p>
+
+<a class="btn-book" href="history.html">View Booking History</a>
+<a class="btn-book" href="index.html">Back Home</a>
+
+<script>
+  // Save booking in localStorage
+  const bookings = JSON.parse(localStorage.getItem("bookings") || "[]");
+
+  const newBooking = {
+    id: Date.now(),
+    date: new Date().toLocaleString(),
+    status: "CONFIRMED",
+    payment: "SUCCESS"
+  };
+
+  bookings.push(newBooking);
+  localStorage.setItem("bookings", JSON.stringify(bookings));
+</script>
+
+</body>
+</html>
