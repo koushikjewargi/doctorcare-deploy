@@ -7,10 +7,9 @@ import OtpPage from './Frontend/Containers/OtpPage';
 import ForgotPassword from './Frontend/Containers/ForgotPassword';
 import ResetPassword from './Frontend/Containers/ResetPassword';
 import Dashboard from './Frontend/Containers/Dashboard';
+import DoctorSearch from './Frontend/Containers/DoctorSearch';
 
-/**
- * Higher Order Component to protect the Dashboard
- */
+
 const ProtectedDashboard = ({ children }) => {
   const role = localStorage.getItem('role');
   
@@ -33,8 +32,9 @@ function App() {
         <Route path="/otp" element={<OtpPage />} />
         <Route path="/forgot-password" element={<ForgotPassword />} />
         <Route path="/reset-password" element={<ResetPassword />} />
+        <Route path="/search" element={<DoctorSearch />} />
         
-        {/* The Dashboard is now SECURE */}
+       
         <Route 
           path="/dashboard" 
           element={

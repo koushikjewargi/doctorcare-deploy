@@ -3,16 +3,16 @@ import { useNavigate, Link } from 'react-router-dom';
 
 const LoginPage = () => {
   const [showPassword, setShowPassword] = useState(false);
-  const [role, setRole] = useState('patient'); // Default role
+  const [role, setRole] = useState('patient');
   const navigate = useNavigate();
 
   const handleLogin = (e) => {
     e.preventDefault();
     
-    // 1. Save the role to localStorage for the App.js guard
+  
     localStorage.setItem('role', role);
 
-    // 2. Logic: Only Doctor/Admin go to Dashboard; Patients go to Home
+   
     if (role === 'doctor' || role === 'admin') {
       navigate('/dashboard');
     } else {
@@ -27,7 +27,7 @@ const LoginPage = () => {
         <h2 style={styles.title}>Doctor Plus+</h2>
         
         <form onSubmit={handleLogin} style={styles.form}>
-          {/* Role Selection Dropdown - Essential for your mentor's request */}
+        
           <div style={styles.inputGroup}>
             <label style={styles.label}>Login Category</label>
             <select 

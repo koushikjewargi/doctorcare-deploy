@@ -44,7 +44,7 @@ const Home = () => {
       </nav>
 
       <main style={styles.main}>
-        {/* Professional eSeva-Style Info Card */}
+        
         <section style={styles.contentSection}>
           <div style={styles.infoCard}>
             <h3 style={styles.cardHeader}>
@@ -55,15 +55,13 @@ const Home = () => {
               services and medical benefits across India. Our mission is to bridge the gap between 
               the people and healthcare providers. 
               
-              {/* This specific text only appears AFTER a patient logs in */}
               {userRole === 'patient' && (
                 <span style={styles.loginAlert}>
                   Welcome back! You can now access your personalized booking features below.
                 </span>
               )}
             </p>
-            
-            {/* Call to Action: Only visible to logged-in patients */}
+       
             {userRole === 'patient' && (
               <button style={styles.bookNowBtn} onClick={() => navigate('/search')}>
                 Book Appointment Now
@@ -72,7 +70,6 @@ const Home = () => {
           </div>
         </section>
 
-        {/* The Grid stays visible for everyone so they see what services you offer */}
         <section style={styles.servicesSection}>
           <h3 style={styles.sectionTitle}>Our Specialized Services</h3>
           <div style={styles.grid}>

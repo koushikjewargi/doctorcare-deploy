@@ -3,7 +3,7 @@ import { useNavigate, Link } from 'react-router-dom';
 
 const Dashboard = () => {
   const navigate = useNavigate();
-  // Get the role we saved during login
+
   const userRole = localStorage.getItem('role') || 'doctor'; 
 
   const handleLogout = () => {
@@ -13,7 +13,7 @@ const Dashboard = () => {
 
   return (
     <div style={styles.container}>
-      {/* Sidebar - Dynamic based on Role */}
+      
       <aside style={styles.sidebar}>
         <div style={styles.logo}>Doctor Plus+</div>
         <p style={styles.roleTag}>{userRole.toUpperCase()} PANEL</p>
