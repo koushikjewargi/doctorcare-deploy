@@ -1,5 +1,5 @@
 import React from 'react';
-import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
 import Home from './Frontend/Containers/Home';
 import LoginPage from './Frontend/Containers/LoginPage';
 import SignupPage from './Frontend/Containers/SignupPage';
@@ -7,6 +7,21 @@ import OtpPage from './Frontend/Containers/OtpPage';
 import ForgotPassword from './Frontend/Containers/ForgotPassword';
 import ResetPassword from './Frontend/Containers/ResetPassword';
 import Dashboard from './Frontend/Containers/Dashboard';
+
+/**
+ * Higher Order Component to protect the Dashboard
+ */
+const ProtectedDashboard = ({ children }) => {
+  const role = localStorage.getItem('role');
+  
+  // Logic: Only admin or doctor can pass this gate
+  if (role === 'admin' || role === 'doctor') {
+    return children;
+  }
+
+  // Redirect everyone else to Home
+  return <Navigate to="/" replace />;
+};
 
 function App() {
   return (
@@ -18,7 +33,16 @@ function App() {
         <Route path="/otp" element={<OtpPage />} />
         <Route path="/forgot-password" element={<ForgotPassword />} />
         <Route path="/reset-password" element={<ResetPassword />} />
-        <Route path="/dashboard" element={<Dashboard />} />
+        
+        {/* The Dashboard is now SECURE */}
+        <Route 
+          path="/dashboard" 
+          element={
+            <ProtectedDashboard>
+              <Dashboard />
+            </ProtectedDashboard>
+          } 
+        />
       </Routes>
     </Router>
   );
