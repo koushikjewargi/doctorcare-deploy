@@ -8,6 +8,7 @@ import ForgotPassword from './Frontend/Containers/ForgotPassword';
 import ResetPassword from './Frontend/Containers/ResetPassword';
 import Dashboard from './Frontend/Containers/Dashboard';
 import DoctorSearch from './Frontend/Containers/DoctorSearch';
+import DoctorProfile from './Frontend/Containers/DoctorProfile';
 
 
 const ProtectedDashboard = ({ children }) => {
@@ -33,6 +34,7 @@ function App() {
         <Route path="/forgot-password" element={<ForgotPassword />} />
         <Route path="/reset-password" element={<ResetPassword />} />
         <Route path="/search" element={<DoctorSearch />} />
+        <Route path="/doctor/:id" element={<DoctorProfile />} />
         
        
         <Route 
