@@ -174,27 +174,3 @@ body{
     font-size:14px;
   }
 }
-/* Wrap title + card in center column */
-.home-stack{
-  display: flex;
-  flex-direction: column;     /* title on top, card below */
-  align-items: center;        /* center horizontally */
-  justify-content: center;    /* center vertically inside main-content */
-  gap: 16px;
-}
-
-/* Center the title text */
-.home-title{
-  text-align: center;
-  margin: 0;
-}
-
-/* Make main-content center the whole block */
-.main-content{
-  margin-left:220px;
-  padding:20px;
-  min-height:100vh;
-  display:flex;
-  align-items:center;         /* vertical center */
-  justify-content:center;     /* horizontal center */
-}
