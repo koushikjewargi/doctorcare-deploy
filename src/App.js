@@ -1,5 +1,7 @@
-import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import { BrowserRouter as Router, Routes, Route, useLocation } from 'react-router-dom';
 import Sidebar from './components/Sidebar.js';
+import Header from './components/Header.js';
+import BrandingHeader from './components/BrandingHeader.js';
 import Home from './pages/Home.js';
 import Booking from './pages/Booking.js';
 import Patient from './pages/Patient.js';
@@ -9,9 +11,14 @@ import Failure from './pages/Failure.js';
 import History from './pages/History.js';
 import './styles.css';
 
-function App() {
+function AppContent() {
+  const location = useLocation();
+  const showHeader = location.pathname === '/';
+
   return (
-    <Router>
+    <>
+      {showHeader && <Header />}
+      <BrandingHeader />
       <Sidebar />
       <Routes>
         <Route path="/" element={<Home />} />
@@ -22,6 +29,14 @@ function App() {
         <Route path="/failure" element={<Failure />} />
         <Route path="/history" element={<History />} />
       </Routes>
+    </>
+  );
+}
+
+function App() {
+  return (
+    <Router>
+      <AppContent />
     </Router>
   );
 }
