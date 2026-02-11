@@ -62,9 +62,6 @@ export default function Header() {
               <div className="dropdown-menu">
                 <a href="#profile">Profile</a>
                 <a href="#settings">Settings</a>
-                <button className="logout-btn" onClick={handleLogout}>
-                  Logout
-                </button>
               </div>
             )}
           </div>
