@@ -3,20 +3,29 @@ import { useNavigate, Link } from 'react-router-dom';
 
 const LoginPage = () => {
   const [showPassword, setShowPassword] = useState(false);
-  const [role, setRole] = useState('patient');
-  const [loading, setLoading] = useState(false); // New Loading State
+  const [identifier, setIdentifier] = useState(''); // Handles both Email or Phone
+  const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
 
   const handleLogin = (e) => {
     e.preventDefault();
-    setLoading(true); // Start animation
-    
-    localStorage.setItem('role', role);
+    setLoading(true);
 
-    // Simulate a network delay for the professional "Loading" feel
+    // DUAL-INPUT ROLE DETECTION LOGIC
+    let detectedRole = 'patient'; 
+    const input = identifier.toLowerCase();
+
+    if (input.includes('admin') || input === '9999999999') {
+      detectedRole = 'admin';
+    } else if (input.includes('doctor') || input === '8888888888') {
+      detectedRole = 'doctor';
+    }
+
+    localStorage.setItem('role', detectedRole);
+
     setTimeout(() => {
       setLoading(false);
-      if (role === 'doctor' || role === 'admin') {
+      if (detectedRole === 'doctor' || detectedRole === 'admin') {
         navigate('/dashboard');
       } else {
         navigate('/');
@@ -32,22 +41,16 @@ const LoginPage = () => {
         
         <form onSubmit={handleLogin} style={styles.form}>
           <div style={styles.inputGroup}>
-            <label style={styles.label}>Login Category</label>
-            <select 
-              value={role} 
-              onChange={(e) => setRole(e.target.value)} 
-              style={styles.select}
+            <label style={styles.label}>Email or Phone Number</label>
+            <input 
+              type="text" 
+              placeholder="Email or 10-digit Mobile" 
+              style={styles.input} 
+              required 
               disabled={loading}
-            >
-              <option value="patient">Patient</option>
-              <option value="doctor">Doctor</option>
-              <option value="admin">Admin</option>
-            </select>
-          </div>
-
-          <div style={styles.inputGroup}>
-            <label style={styles.label}>Email or Phone number</label>
-            <input type="text" placeholder="e.g. 9876543210" style={styles.input} required disabled={loading} />
+              value={identifier}
+              onChange={(e) => setIdentifier(e.target.value)} 
+            />
           </div>
 
           <div style={styles.inputGroup}>
@@ -94,35 +97,16 @@ const styles = {
   form: { display: 'flex', flexDirection: 'column', gap: '20px', textAlign: 'left' },
   inputGroup: { display: 'flex', flexDirection: 'column', gap: '6px' },
   label: { fontSize: '13px', fontWeight: '600', color: '#555', marginLeft: '4px' },
-  select: { padding: '12px', borderRadius: '12px', border: '1px solid #e0e0e0', fontSize: '15px', outline: 'none', backgroundColor: '#f9f9f9', cursor: 'pointer' },
   input: { padding: '12px', borderRadius: '12px', border: '1px solid #e0e0e0', width: '100%', boxSizing: 'border-box', fontSize: '15px', outline: 'none', backgroundColor: '#f9f9f9' },
   passwordWrapper: { position: 'relative', display: 'flex', alignItems: 'center' },
   showToggle: { position: 'absolute', right: '15px', color: '#00d09c', cursor: 'pointer', fontWeight: 'bold', fontSize: '12px' },
   forgotWrapper: { textAlign: 'right', marginTop: '4px' },
   forgotLink: { fontSize: '12px', color: '#888', textDecoration: 'none', fontWeight: '500' },
   buttonWrapper: { display: 'flex', justifyContent: 'center', marginTop: '10px' },
-  primaryBtn: { 
-    backgroundColor: '#00d09c', color: '#fff', padding: '14px 60px', borderRadius: '12px', border: 'none', 
-    fontWeight: 'bold', cursor: 'pointer', fontSize: '16px', boxShadow: '0 8px 20px rgba(0, 208, 156, 0.3)', 
-    transition: '0.3s', display: 'flex', justifyContent: 'center', alignItems: 'center', minWidth: '160px' 
-  },
-  // CSS Spinner Animation
-  spinner: {
-    width: '20px', height: '20px', border: '3px solid rgba(255,255,255,0.3)', borderTop: '3px solid #fff', 
-    borderRadius: '50%', animation: 'spin 0.8s linear infinite'
-  },
+  primaryBtn: { backgroundColor: '#00d09c', color: '#fff', padding: '14px 60px', borderRadius: '12px', border: 'none', fontWeight: 'bold', cursor: 'pointer', fontSize: '16px', boxShadow: '0 8px 20px rgba(0, 208, 156, 0.3)', transition: '0.3s', display: 'flex', justifyContent: 'center', alignItems: 'center', minWidth: '160px' },
+  spinner: { width: '20px', height: '20px', border: '3px solid rgba(255,255,255,0.3)', borderTop: '3px solid #fff', borderRadius: '50%', animation: 'spin 0.8s linear infinite' },
   footer: { marginTop: '30px', fontSize: '14px', color: '#666' },
   signupLink: { color: '#00d09c', textDecoration: 'none', fontWeight: 'bold', marginLeft: '5px' }
 };
-
-// Add this to your index.css or a global style tag
-const styleSheet = document.createElement("style");
-styleSheet.innerText = `
-  @keyframes spin {
-    0% { transform: rotate(0deg); }
-    100% { transform: rotate(360deg); }
-  }
-`;
-document.head.appendChild(styleSheet);
 
 export default LoginPage;
