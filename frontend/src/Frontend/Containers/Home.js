@@ -1,50 +1,14 @@
 import React from 'react';
-import { Link, useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 
 const Home = () => {
   const navigate = useNavigate();
-  // We check if a 'role' is stored. If null, the user is NOT logged in.
   const userRole = localStorage.getItem('role'); 
-
-  const handleLogout = () => {
-    localStorage.removeItem('role'); // Deletes the session
-    alert("Logged out successfully.");
-    navigate('/login');
-  };
 
   return (
     <div style={styles.container}>
-      {/* Navbar: This part handles the "Before" and "After" login view */}
-      <nav style={styles.navbar}>
-        <div style={styles.navLeft}>
-          <div style={styles.logo}>Doctor Plus+</div>
-          <div style={styles.searchWrapper}>
-            <input 
-              type="text" 
-              placeholder="Search Doctors, Specialities..." 
-              style={styles.headerSearch} 
-            />
-          </div>
-        </div>
-        <div style={styles.navLinks}>
-          <Link to="/" style={styles.link}>Home</Link>
-          <Link to="/about" style={styles.link}>About Us</Link>
-          
-          {/* LOGIC: If userRole is null (Before Login), show Login button. 
-              If userRole exists (After Login), show Logout. */}
-          {userRole ? (
-            <div style={styles.loggedInSection}>
-              <span style={styles.welcomeText}>Hello, Koushik</span>
-              <button onClick={handleLogout} style={styles.logoutBtn}>Logout</button>
-            </div>
-          ) : (
-            <Link to="/login" style={styles.loginBtn}>Login / Sign Up</Link>
-          )}
-        </div>
-      </nav>
-
       <main style={styles.main}>
-        
+        {/* About Section */}
         <section style={styles.contentSection}>
           <div style={styles.infoCard}>
             <h3 style={styles.cardHeader}>
@@ -70,6 +34,7 @@ const Home = () => {
           </div>
         </section>
 
+        {/* Services Section */}
         <section style={styles.servicesSection}>
           <h3 style={styles.sectionTitle}>Our Specialized Services</h3>
           <div style={styles.grid}>
@@ -89,18 +54,7 @@ const Home = () => {
 
 const styles = {
   container: { fontFamily: "'Segoe UI', Roboto, sans-serif", backgroundColor: '#f9f9f9', minHeight: '100vh' },
-  navbar: { display: 'flex', justifyContent: 'space-between', alignItems: 'center', padding: '12px 5%', backgroundColor: '#fff', boxShadow: '0 2px 10px rgba(0,0,0,0.05)', position: 'sticky', top: 0, zIndex: 100 },
-  navLeft: { display: 'flex', alignItems: 'center', gap: '40px' },
-  logo: { fontSize: '24px', fontWeight: 'bold', color: '#00d09c' },
-  searchWrapper: { position: 'relative' },
-  headerSearch: { padding: '10px 20px', borderRadius: '50px', border: '1px solid #eee', width: '300px', outline: 'none', backgroundColor: '#f1f3f4' },
-  navLinks: { display: 'flex', gap: '25px', alignItems: 'center' },
-  link: { textDecoration: 'none', color: '#555', fontWeight: '500', fontSize: '14px' },
-  loggedInSection: { display: 'flex', alignItems: 'center', gap: '15px' },
-  welcomeText: { fontSize: '14px', fontWeight: 'bold', color: '#333' },
-  logoutBtn: { backgroundColor: '#ff4d4d', color: '#fff', border: 'none', padding: '8px 18px', borderRadius: '50px', cursor: 'pointer', fontWeight: 'bold' },
-  loginBtn: { textDecoration: 'none', backgroundColor: '#00d09c', color: '#fff', padding: '8px 20px', borderRadius: '50px', fontWeight: 'bold', fontSize: '14px' },
-  main: { padding: '60px 5%' },
+  main: { padding: '40px 5%' },
   contentSection: { display: 'flex', justifyContent: 'center', marginBottom: '60px' },
   infoCard: { backgroundColor: '#fff', padding: '40px', borderRadius: '15px', maxWidth: '850px', borderLeft: '8px solid #00d09c', boxShadow: '0 10px 30px rgba(0,0,0,0.05)' },
   cardHeader: { color: '#333', fontSize: '26px', fontWeight: 'bold', marginBottom: '20px', display: 'flex', alignItems: 'center', gap: '12px' },

@@ -1,42 +1,29 @@
 import React from 'react';
-import { useNavigate, Link } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 
 const Dashboard = () => {
-  const navigate = useNavigate();
-
   const userRole = localStorage.getItem('role') || 'doctor'; 
-
-  const handleLogout = () => {
-    localStorage.removeItem('role'); 
-    navigate('/login'); 
-  };
 
   return (
     <div style={styles.container}>
-      
+      {/* Sidebar Navigation */}
       <aside style={styles.sidebar}>
-        <div style={styles.logo}>Doctor Plus+</div>
         <p style={styles.roleTag}>{userRole.toUpperCase()} PANEL</p>
-        
         <nav style={styles.sideNav}>
           <Link to="/dashboard" style={styles.sideLinkActive}>Dashboard</Link>
           <Link to="/appointments" style={styles.sideLink}>Appointments</Link>
-          
-          {/* ONLY ADMIN can see User Management */}
           {userRole === 'admin' && (
             <Link to="/manage-users" style={styles.adminLink}>Manage Doctors</Link>
           )}
-
           <Link to="/reports" style={styles.sideLink}>Medical Reports</Link>
           <Link to="/settings" style={styles.sideLink}>Settings</Link>
         </nav>
-        
-        <button style={styles.logoutBtn} onClick={handleLogout}>Logout</button>
       </aside>
 
+      {/* Main Content Area */}
       <main style={styles.mainContent}>
         <header style={styles.header}>
-          <h2>Welcome back, <span style={{color: '#00d09c'}}>Koushik</span></h2>
+          <h2 style={styles.welcomeTitle}>Welcome back, <span style={{color: '#00d09c'}}>Koushik</span></h2>
           <p>You are logged in as a <strong>{userRole}</strong>.</p>
         </header>
 
@@ -53,19 +40,44 @@ const Dashboard = () => {
 };
 
 const styles = {
-  container: { display: 'flex', minHeight: '100vh', backgroundColor: '#f4f7f6' },
-  sidebar: { width: '250px', backgroundColor: '#fff', padding: '30px', display: 'flex', flexDirection: 'column', borderRight: '1px solid #e0e0e0' },
-  logo: { fontSize: '24px', fontWeight: 'bold', color: '#00d09c', marginBottom: '10px' },
-  roleTag: { fontSize: '12px', color: '#888', fontWeight: 'bold', marginBottom: '40px', letterSpacing: '1px' },
-  sideNav: { display: 'flex', flexDirection: 'column', gap: '15px', flex: 1 },
-  sideLink: { textDecoration: 'none', color: '#666', padding: '10px', borderRadius: '8px' },
-  sideLinkActive: { textDecoration: 'none', color: '#fff', backgroundColor: '#00d09c', padding: '10px', borderRadius: '8px', fontWeight: 'bold' },
-  adminLink: { textDecoration: 'none', color: '#ff7f00', fontWeight: 'bold', padding: '10px', backgroundColor: '#fff5eb', borderRadius: '8px' },
-  logoutBtn: { backgroundColor: '#ff4d4d', color: '#fff', border: 'none', padding: '12px', borderRadius: '8px', cursor: 'pointer', fontWeight: 'bold' },
-  mainContent: { flex: 1, padding: '40px' },
-  header: { marginBottom: '40px' },
-  statsGrid: { display: 'flex', gap: '20px' },
-  statCard: { backgroundColor: '#fff', padding: '25px', borderRadius: '15px', flex: 1, boxShadow: '0 4px 12px rgba(0,0,0,0.05)' }
+  container: { 
+    display: 'flex', 
+    flexWrap: 'wrap', // Allows wrap on mobile
+    minHeight: '90vh', 
+    backgroundColor: '#f4f7f6' 
+  },
+  sidebar: { 
+    width: '100%', // Mobile default
+    maxWidth: '250px', 
+    flex: '1 1 250px', // Flex basis for sidebar
+    backgroundColor: '#fff', 
+    padding: '20px', 
+    display: 'flex', 
+    flexDirection: 'column', 
+    borderRight: '1px solid #e0e0e0',
+    minHeight: 'auto'
+  },
+  roleTag: { fontSize: '12px', color: '#888', fontWeight: 'bold', marginBottom: '20px', letterSpacing: '1px' },
+  sideNav: { display: 'flex', flexDirection: 'column', gap: '10px', flex: 1 },
+  sideLink: { textDecoration: 'none', color: '#666', padding: '10px', borderRadius: '8px', fontSize: '14px' },
+  sideLinkActive: { textDecoration: 'none', color: '#fff', backgroundColor: '#00d09c', padding: '10px', borderRadius: '8px', fontWeight: 'bold', fontSize: '14px' },
+  adminLink: { textDecoration: 'none', color: '#ff7f00', fontWeight: 'bold', padding: '10px', backgroundColor: '#fff5eb', borderRadius: '8px', fontSize: '14px' },
+  mainContent: { 
+    flex: '1 1 350px', // Content takes rest of space
+    padding: 'clamp(20px, 4vw, 40px)', 
+    minWidth: '300px' 
+  },
+  header: { marginBottom: '30px' },
+  welcomeTitle: { fontSize: 'clamp(20px, 5vw, 26px)', margin: 0 },
+  statsGrid: { display: 'flex', gap: '15px', flexWrap: 'wrap' },
+  statCard: { 
+    backgroundColor: '#fff', 
+    padding: '20px', 
+    borderRadius: '15px', 
+    flex: '1 1 150px', // Stat cards stack on small screens
+    boxShadow: '0 4px 12px rgba(0,0,0,0.05)',
+    textAlign: 'center'
+  }
 };
 
 export default Dashboard;

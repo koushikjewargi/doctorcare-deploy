@@ -16,19 +16,13 @@ const SignupPage = () => {
   const handleSignup = (e) => {
     e.preventDefault();
     setError('');
-
-    // Logic: Validate if passwords match
     if (formData.password !== formData.confirmPassword) {
       setError("Passwords do not match!");
       return;
     }
-
     setLoading(true);
-    
-    // Simulate API call for professional UX
     setTimeout(() => {
       setLoading(false);
-      // Pass state so OTP page knows this is a NEW user
       navigate('/otp', { state: { flow: 'signup', mobile: formData.mobile } });
     }, 1500);
   };
@@ -109,12 +103,35 @@ const SignupPage = () => {
 };
 
 const styles = {
-  container: { height: '100vh', width: '100%', display: 'flex', justifyContent: 'center', alignItems: 'center', backgroundImage: 'url("https://images.unsplash.com/photo-1505751172107-573225a463be?auto=format&fit=crop&w=1920&q=80")', backgroundSize: 'cover', backgroundPosition: 'center', position: 'relative', fontFamily: "'Segoe UI', Roboto, sans-serif" },
+  container: { 
+    minHeight: '100vh', 
+    width: '100%', 
+    display: 'flex', 
+    justifyContent: 'center', 
+    alignItems: 'center', 
+    backgroundImage: 'url("https://images.unsplash.com/photo-1505751172107-573225a463be?auto=format&fit=crop&w=1920&q=80")', 
+    backgroundSize: 'cover', 
+    backgroundPosition: 'center', 
+    position: 'relative', 
+    padding: '20px', // Prevents sticking to edges on mobile
+    boxSizing: 'border-box'
+  },
   overlay: { position: 'absolute', top: 0, left: 0, right: 0, bottom: 0, backgroundColor: 'rgba(0, 0, 0, 0.5)', zIndex: 1 },
-  glassCard: { position: 'relative', zIndex: 2, width: '90%', maxWidth: '420px', padding: '40px', backgroundColor: 'rgba(255, 255, 255, 0.98)', borderRadius: '28px', textAlign: 'center', boxShadow: '0 20px 40px rgba(0, 0, 0, 0.4)' },
-  title: { fontSize: '28px', fontWeight: '800', color: '#00d09c', marginBottom: '10px' },
+  glassCard: { 
+    position: 'relative', 
+    zIndex: 2, 
+    width: '100%', 
+    maxWidth: '420px', 
+    padding: 'clamp(20px, 5vw, 40px)', // Responsive padding
+    backgroundColor: 'rgba(255, 255, 255, 0.98)', 
+    borderRadius: '28px', 
+    textAlign: 'center', 
+    boxShadow: '0 20px 40px rgba(0, 0, 0, 0.4)',
+    overflowY: 'auto' // Vertical scroll for small phones
+  },
+  title: { fontSize: 'clamp(22px, 6vw, 28px)', fontWeight: '800', color: '#00d09c', marginBottom: '10px' },
   subtitle: { fontSize: '14px', color: '#666', marginBottom: '25px' },
-  form: { display: 'flex', flexDirection: 'column', gap: '18px', textAlign: 'left' },
+  form: { display: 'flex', flexDirection: 'column', gap: '15px', textAlign: 'left' },
   inputGroup: { display: 'flex', flexDirection: 'column', gap: '6px' },
   label: { fontSize: '13px', fontWeight: '600', color: '#555', marginLeft: '4px' },
   input: { padding: '12px', borderRadius: '12px', border: '1px solid #e0e0e0', width: '100%', boxSizing: 'border-box', fontSize: '15px', outline: 'none', backgroundColor: '#f9f9f9' },
@@ -122,7 +139,7 @@ const styles = {
   showToggle: { position: 'absolute', right: '15px', color: '#00d09c', cursor: 'pointer', fontWeight: 'bold', fontSize: '12px' },
   errorText: { color: '#ff4d4d', fontSize: '12px', marginTop: '4px', fontWeight: '500' },
   buttonWrapper: { display: 'flex', justifyContent: 'center', marginTop: '10px' },
-  primaryBtn: { backgroundColor: '#00d09c', color: '#fff', padding: '14px 50px', borderRadius: '12px', border: 'none', fontWeight: 'bold', cursor: 'pointer', fontSize: '16px', boxShadow: '0 8px 20px rgba(0, 208, 156, 0.3)', minWidth: '200px', display: 'flex', justifyContent: 'center' },
+  primaryBtn: { backgroundColor: '#00d09c', color: '#fff', padding: '14px 40px', borderRadius: '12px', border: 'none', fontWeight: 'bold', cursor: 'pointer', fontSize: '16px', width: '100%', maxWidth: '280px', display: 'flex', justifyContent: 'center' },
   spinner: { width: '20px', height: '20px', border: '3px solid rgba(255,255,255,0.3)', borderTop: '3px solid #fff', borderRadius: '50%', animation: 'spin 0.8s linear infinite' },
   footer: { marginTop: '25px', fontSize: '14px', color: '#666' },
   signupLink: { color: '#00d09c', textDecoration: 'none', fontWeight: 'bold' }
