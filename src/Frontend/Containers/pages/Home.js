@@ -43,6 +43,39 @@ export default function Home() {
 
   return (
     <main className="main-content home-main">
+      {/* Find Your Specialist */}
+      <section className="search-panel">
+        <h2>Find Your Specialist</h2>
+        <div className="search-wrapper">
+          <form className="search-bar" onSubmit={(e)=>e.preventDefault()}>
+            <input type="text" placeholder="Search by name or specialty..." />
+            <button type="submit">🔍</button>
+          </form>
+        </div>
+      </section>
+
+      <section className="specialist-list">
+        {[
+          {name:'Dr. Sandeep Kumar', meta:'Cardiologist • 12 Years Exp', price:'₹800'},
+          {name:'Dr. Anjali Rao', meta:'Neurologist • 10 Years Exp', price:'₹1000'},
+          {name:'Dr. Vikram Singh', meta:'Dentist • 8 Years Exp', price:'₹500'},
+          {name:'Dr. Meera Iyer', meta:'General Physician • 15 Years Exp', price:'₹600'}
+        ].map((d, i)=> (
+          <div className="specialist-row" key={i}>
+            <div className="specialist-info">
+              <div className="specialist-name">{d.name}</div>
+              <div className="specialist-meta">{d.meta}</div>
+            </div>
+
+            <div style={{display:'flex',alignItems:'center',gap:12}}>
+              <div className="price-pill">{d.price}</div>
+              <div className="specialist-actions">
+                <button className="view-btn" onClick={()=>navigate('/booking')}>View Profile</button>
+              </div>
+            </div>
+          </div>
+        ))}
+      </section>
       {/* Hero Section */}
       <section className="hero-section">
         <div className="hero-content">

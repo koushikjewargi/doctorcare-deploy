@@ -44,7 +44,7 @@ export default function Payment() {
         <div className="payment-methods">
           <label className="payment-method">
             <div className="left">
-              <img src="/src/assets/visa.svg" alt="visa" />
+              <img src="/src/Frontend/Assets/assets/visa.svg" alt="visa" />
               <div>Credit Card</div>
             </div>
             <input type="radio" name="pay" value="Card" checked={paymentMethod === 'Card'} onChange={(e) => setPaymentMethod(e.target.value)} />
@@ -52,7 +52,7 @@ export default function Payment() {
 
           <label className="payment-method">
             <div className="left">
-              <img src="/src/assets/upi.svg" alt="upi" />
+              <img src="/src/Frontend/Assets/assets/upi.svg" alt="upi" />
               <div>UPI</div>
             </div>
             <input type="radio" name="pay" value="UPI" checked={paymentMethod === 'UPI'} onChange={(e) => setPaymentMethod(e.target.value)} />
@@ -60,7 +60,7 @@ export default function Payment() {
 
           <label className="payment-method">
             <div className="left">
-              <img src="/src/assets/offline.svg" alt="offline" />
+              <img src="/src/Frontend/Assets/assets/offline.svg" alt="offline" />
               <div>Offline</div>
             </div>
             <input type="radio" name="pay" value="Offline" checked={paymentMethod === 'Offline'} onChange={(e) => setPaymentMethod(e.target.value)} />

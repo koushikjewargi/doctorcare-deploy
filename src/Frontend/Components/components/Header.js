@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
-import '../styles.css';
+import '../../App.css';
 
 export default function Header() {
   const navigate = useNavigate();
@@ -26,7 +26,7 @@ export default function Header() {
         {/* Logo */}
         <Link to="/" className="logo">
           <span className="logo-icon">⚕️</span>
-          <span className="logo-text">Diagnostics</span>
+          <span className="logo-text">Doctor Plus+</span>
         </Link>
 
         {/* Search Bar - Hidden on Mobile */}

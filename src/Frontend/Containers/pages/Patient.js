@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import '../styles.css';
+import '../../App.css';
 
 export default function Patient() {
   const navigate = useNavigate();
