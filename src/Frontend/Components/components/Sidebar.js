@@ -7,6 +7,8 @@ export default function Sidebar() {
   const location = useLocation();
   const navigate = useNavigate();
 
+  const isHome = location.pathname === '/';   // ✅ only home page
+
   const toggleSidebar = () => setIsOpen(!isOpen);
   const closeSidebar = () => setIsOpen(false);
 
@@ -29,16 +31,19 @@ export default function Sidebar() {
     { path: '/history', label: 'History', icon: '📋' },
   ];
 
+  // 🚫 Do NOT render sidebar on other pages
+  if (!isHome) return null;
+
   return (
     <>
-      {/* Hamburger Button */}
+      {/* Hamburger Button (Home only) */}
       <button className="menu-toggle" onClick={toggleSidebar} aria-label="Toggle menu">
         <span></span>
         <span></span>
         <span></span>
       </button>
 
-      {/* Sidebar Navigation Drawer */}
+      {/* Sidebar Navigation Drawer (Home only) */}
       <aside className={`sidebar ${isOpen ? 'open' : ''}`}>
         <nav className="sidebar-nav">
           {menuItems.map((item) => (
@@ -63,7 +68,7 @@ export default function Sidebar() {
         </div>
       </aside>
 
-      {/* Overlay for mobile */}
+      {/* Overlay for mobile (Home only) */}
       {isOpen && <div className="sidebar-overlay" onClick={closeSidebar}></div>}
     </>
   );

@@ -115,12 +115,12 @@ body{
   outline:none;
   padding:8px;
   font-size:16px;
-  color:#374151;
+  color:#d0d5dc;
   font-weight:500;
 }
 
 .search-bar input::placeholder{
-  color:#9ca3af;
+  color:#56647a;
   font-size:16px;
 }
 
@@ -282,7 +282,7 @@ body{
   left:0;
   top:65px;
   bottom:0;
-  background:linear-gradient(180deg, #1f2937 0%, #111827 100%);
+  background:linear-gradient(180deg, #979da5 0%, #afb3bc 100%);
   padding:0;
   z-index:130;
   transition: left .3s ease;
