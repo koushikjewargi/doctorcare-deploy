@@ -22,6 +22,11 @@ import SearchDoctor from './Frontend/Containers/SearchDoctor';
 import PopularDoctor from './Frontend/Containers/PopularDoctor';
 import FavDoctor from './Frontend/Containers/FavDoctor';
 
+
+import MedicalRecords from './Frontend/Containers/MedicalRecords';
+import AddedRecords from './Frontend/Containers/AddedRecords';
+import PatientDetails from './Frontend/Containers/PatientDetails';
+
 const ProtectedDashboard = ({ children }) => {
   const role = localStorage.getItem('role');
   if (role === 'admin' || role === 'doctor') {
@@ -52,6 +57,10 @@ function App() {
             <Route path="/search-doctor" element={<SearchDoctor />} />
             <Route path="/popular" element={<PopularDoctor />} />
             <Route path="/favorites" element={<FavDoctor />} />
+
+            <Route path="/records" element={<MedicalRecords />} />
+            <Route path="/added-records" element={<AddedRecords />} />
+            <Route path="/patient-details" element={<PatientDetails />} />
 
             <Route 
               path="/dashboard" 
