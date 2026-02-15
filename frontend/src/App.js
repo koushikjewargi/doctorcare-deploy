@@ -1,80 +1,138 @@
 import React from 'react';
-import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
+import { BrowserRouter as Router, Routes, Route, Navigate, useLocation } from 'react-router-dom';
 
-// Component Imports
+// --- UTILS ---
+import ScrollToTop from './Frontend/Components/ScrollToTop';
+
+// --- COMPONENTS ---
 import Header from './Frontend/Components/Header';
 import Footer from './Frontend/Components/Footer';
 
-// Container Imports
-import Home from './Frontend/Containers/Home';
-import LoginPage from './Frontend/Containers/LoginPage';
-import SignupPage from './Frontend/Containers/SignupPage';
-import OtpPage from './Frontend/Containers/OtpPage';
+// --- AUTH (Vibe Containers) ---
+import Splash from './Frontend/Containers/Splash';
+import Onboarding from './Frontend/Containers/Onboarding';
+import Login from './Frontend/Containers/Login';
 import ForgotPassword from './Frontend/Containers/ForgotPassword';
+import SecurityQuestions from './Frontend/Containers/SecurityQuestions';
 import ResetPassword from './Frontend/Containers/ResetPassword';
-import Dashboard from './Frontend/Containers/Dashboard';
-import DoctorSearch from './Frontend/Containers/DoctorSearch';
-import DoctorProfile from './Frontend/Containers/DoctorProfile';
 
-// Shivu's Module Imports
+// --- SYSTEM PAGES ---
+import Feedback from './Frontend/Containers/Feedback';
+import HelpCenter from './Frontend/Containers/HelpCenter';
+import NotFound from './Frontend/Containers/NotFound';
+
+// --- DASHBOARDS ---
+import Dashboard from './Frontend/Containers/Dashboard';
+import AdminDashboard from './Frontend/Containers/AdminDashboard';
+import DoctorDashboard from './Frontend/Containers/DoctorDashboard';
+
+// --- PATIENT MODULE ---
 import MenuPage from './Frontend/Containers/MenuPage';
 import SearchDoctor from './Frontend/Containers/SearchDoctor';
+import DoctorSearch from './Frontend/Containers/DoctorSearch';
+import DoctorProfile from './Frontend/Containers/DoctorProfile';
 import PopularDoctor from './Frontend/Containers/PopularDoctor';
 import FavDoctor from './Frontend/Containers/FavDoctor';
-
-
 import MedicalRecords from './Frontend/Containers/MedicalRecords';
 import AddedRecords from './Frontend/Containers/AddedRecords';
 import PatientDetails from './Frontend/Containers/PatientDetails';
 
-const ProtectedDashboard = ({ children }) => {
+// --- DIAGNOSTICS ---
+import Booking from './Frontend/Containers/Booking';
+import Payment from './Frontend/Containers/Payment';
+
+// 🔒 PROTECTED ROUTE COMPONENT (The Gatekeeper)
+const ProtectedRoute = ({ children }) => {
   const role = localStorage.getItem('role');
-  if (role === 'admin' || role === 'doctor') {
-    return children;
+  
+  // If no role is found (not logged in), kick them to Login
+  if (!role) {
+    return <Navigate to="/login" replace />;
   }
-  return <Navigate to="/" replace />;
+  
+  return children;
 };
 
+// 🎨 LAYOUT WRAPPER
+const Layout = ({ children }) => {
+  const location = useLocation();
+  
+  // HIDE Header/Footer on all these pages:
+  const hideLayout = [
+    '/', 
+    '/onboarding', 
+    '/login', 
+    '/forgot-password', 
+    '/security-questions', 
+    '/reset-password'
+  ]; 
+  
+  const showHeaderFooter = !hideLayout.includes(location.pathname);
+
+  return (
+    <div style={{ display: 'flex', flexDirection: 'column', minHeight: '100vh', backgroundColor: '#f8fafc' }}>
+      {showHeaderFooter && <Header />} 
+      
+      <main style={{ 
+        flex: 1, 
+        position: 'relative', 
+        // Add padding ONLY if header is showing
+        paddingTop: showHeaderFooter ? '70px' : '0' 
+      }}>
+        {children}
+      </main>
+
+      {showHeaderFooter && <Footer />}
+    </div>
+  );
+};
+
+// --- MAIN APP COMPONENT ---
 function App() {
   return (
     <Router>
-      <div style={{ display: 'flex', flexDirection: 'column', minHeight: '100vh' }}>
-        <Header /> {/* Professional Global Header */}
-        
-        <main style={{ flex: 1 }}>
-          <Routes>
-            <Route path="/" element={<Home />} />
-            <Route path="/login" element={<LoginPage />} />
-            <Route path="/signup" element={<SignupPage />} />
-            <Route path="/otp" element={<OtpPage />} />
-            <Route path="/forgot-password" element={<ForgotPassword />} />
-            <Route path="/reset-password" element={<ResetPassword />} />
-            <Route path="/search" element={<DoctorSearch />} />
-            <Route path="/doctor/:id" element={<DoctorProfile />} />
-            
-            {/* Shivu's New Routes */}
-            <Route path="/menu" element={<MenuPage />} />
-            <Route path="/search-doctor" element={<SearchDoctor />} />
-            <Route path="/popular" element={<PopularDoctor />} />
-            <Route path="/favorites" element={<FavDoctor />} />
+      <ScrollToTop />
+      <Layout>
+        <Routes>
+          {/* === PUBLIC ROUTES (No Login Required) === */}
+          <Route path="/" element={<Splash />} />
+          <Route path="/onboarding" element={<Onboarding />} />
+          <Route path="/login" element={<Login />} />
+          <Route path="/forgot-password" element={<ForgotPassword />} />
+          <Route path="/security-questions" element={<SecurityQuestions />} />
+          <Route path="/reset-password" element={<ResetPassword />} />
 
-            <Route path="/records" element={<MedicalRecords />} />
-            <Route path="/added-records" element={<AddedRecords />} />
-            <Route path="/patient-details" element={<PatientDetails />} />
+          {/* === PROTECTED ROUTES (Login Required) === */}
+          {/* Use ProtectedRoute wrapper for ALL internal pages */}
+          
+          {/* Patient Pages */}
+          <Route path="/menu" element={<ProtectedRoute><MenuPage /></ProtectedRoute>} />
+          <Route path="/search" element={<ProtectedRoute><DoctorSearch /></ProtectedRoute>} /> 
+          <Route path="/search-doctor" element={<ProtectedRoute><SearchDoctor /></ProtectedRoute>} />
+          <Route path="/doctor/:id" element={<ProtectedRoute><DoctorProfile /></ProtectedRoute>} />
+          <Route path="/popular" element={<ProtectedRoute><PopularDoctor /></ProtectedRoute>} />
+          <Route path="/favorites" element={<ProtectedRoute><FavDoctor /></ProtectedRoute>} />
+          <Route path="/records" element={<ProtectedRoute><MedicalRecords /></ProtectedRoute>} />
+          <Route path="/added-records" element={<ProtectedRoute><AddedRecords /></ProtectedRoute>} />
+          <Route path="/patient-details" element={<ProtectedRoute><PatientDetails /></ProtectedRoute>} />
 
-            <Route 
-              path="/dashboard" 
-              element={
-                <ProtectedDashboard>
-                  <Dashboard />
-                </ProtectedDashboard>
-              } 
-            />
-          </Routes>
-        </main>
+          {/* Diagnostics */}
+          <Route path="/booking" element={<ProtectedRoute><Booking /></ProtectedRoute>} />
+          <Route path="/payment" element={<ProtectedRoute><Payment /></ProtectedRoute>} />
 
-        <Footer /> {/* Professional Global Footer */}
-      </div>
+          {/* System Pages */}
+          <Route path="/feedback" element={<ProtectedRoute><Feedback /></ProtectedRoute>} />
+          <Route path="/help" element={<ProtectedRoute><HelpCenter /></ProtectedRoute>} />
+
+          {/* Dashboards */}
+          <Route path="/dashboard" element={<ProtectedRoute><Dashboard /></ProtectedRoute>} />
+          <Route path="/admin-dashboard" element={<ProtectedRoute><AdminDashboard /></ProtectedRoute>} />
+          <Route path="/doctor-dashboard" element={<ProtectedRoute><DoctorDashboard /></ProtectedRoute>} />
+
+          {/* Fallback */}
+          <Route path="*" element={<NotFound />} />
+        </Routes>
+      </Layout>
     </Router>
   );
 }

@@ -1,42 +1,40 @@
-import React, { useState } from "react";
-import { useNavigate } from "react-router-dom";
-import { Lock, Loader2, CheckCircle2, Eye, EyeOff } from "lucide-react";
+import React, { useState, useEffect } from "react";
+import { useNavigate, useLocation } from "react-router-dom";
+import { Shield, Loader2, CheckCircle2, AlertTriangle } from "lucide-react";
 
-const ResetPassword = () => {
+const SecurityQuestions = () => {
   const navigate = useNavigate();
-  const [pw, setPw] = useState("");
-  const [confirm, setConfirm] = useState("");
-  const [showPw, setShowPw] = useState(false);
-  const [showConfirm, setShowConfirm] = useState(false);
-  const [error, setError] = useState("");
+  const location = useLocation();
+  const email = location.state?.email || "User";
+
+  const [ans1, setAns1] = useState("");
+  const [ans2, setAns2] = useState("");
   const [loading, setLoading] = useState(false);
+  const [error, setError] = useState("");
   const [success, setSuccess] = useState(false);
 
-  const getStrength = (p) => {
-    if (p.length < 6) return { width: '30%', color: '#ef4444', label: 'Weak' };
-    if (p.length < 10) return { width: '60%', color: '#f59e0b', label: 'Medium' };
-    return { width: '100%', color: '#00d09c', label: 'Strong' };
-  };
-  const strength = getStrength(pw);
+  useEffect(() => {
+    // Optional: Redirect if no email state
+    // if (!location.state?.email) navigate("/forgot-password");
+  }, [location, navigate]);
 
   const handleSubmit = (e) => {
     e.preventDefault();
     setError("");
 
-    if (pw !== confirm) {
-      setError("Passwords do not match.");
-      return;
-    }
-    if (pw.length < 6) {
-      setError("Password must be at least 6 characters.");
+    if (ans1.length < 2 || ans2.length < 2) {
+      setError("Please provide valid answers.");
       return;
     }
 
     setLoading(true);
+
     setTimeout(() => {
       setLoading(false);
       setSuccess(true);
-      setTimeout(() => navigate("/login"), 1500);
+      setTimeout(() => {
+        navigate("/reset-password", { state: { email } });
+      }, 1500);
     }, 1500);
   };
 
@@ -47,8 +45,8 @@ const ResetPassword = () => {
           <div style={styles.iconCircleSuccess}>
             <CheckCircle2 size={40} color="#00d09c" />
           </div>
-          <h2 style={styles.successTitle}>Password Updated!</h2>
-          <p style={styles.subtitle}>Redirecting to login...</p>
+          <h2 style={styles.successTitle}>Identity Verified</h2>
+          <p style={styles.subtitle}>Redirecting to reset password...</p>
         </div>
       </div>
     );
@@ -59,56 +57,41 @@ const ResetPassword = () => {
       <div style={styles.contentWrapper}>
         <div style={styles.header}>
           <div style={styles.iconCircle}>
-            <Lock size={28} color="#00d09c" />
+            <Shield size={28} color="#00d09c" />
           </div>
-          <h1 style={styles.title}>Reset Password</h1>
-          <p style={styles.subtitle}>Create a strong new password</p>
+          <h1 style={styles.title}>Security Check</h1>
+          <p style={styles.subtitle}>Answer questions for <b>{email}</b></p>
         </div>
 
         <div style={styles.glassCard}>
           <form onSubmit={handleSubmit} style={styles.form}>
-            
             <div style={styles.inputGroup}>
-              <label style={styles.label}>New Password</label>
-              <div style={{position: 'relative'}}>
-                <input
-                  type={showPw ? "text" : "password"}
-                  value={pw}
-                  onChange={(e) => { setPw(e.target.value); setError(""); }}
-                  required
-                  placeholder="••••••••"
-                  style={styles.input}
-                />
-                <button type="button" onClick={() => setShowPw(!showPw)} style={styles.eyeBtn}>
-                  {showPw ? <EyeOff size={18} /> : <Eye size={18} />}
-                </button>
-              </div>
-              
-              {pw && (
-                <div style={{marginTop: '8px'}}>
-                  <div style={{height: '4px', backgroundColor: '#e2e8f0', borderRadius: '2px', overflow: 'hidden'}}>
-                    <div style={{height: '100%', width: strength.width, backgroundColor: strength.color, transition: 'all 0.3s'}}></div>
-                  </div>
-                  <p style={{fontSize: '11px', color: strength.color, marginTop: '4px', fontWeight: '600'}}>{strength.label}</p>
-                </div>
-              )}
+              <label style={styles.label}>Q1: What was your first pet's name?</label>
+              <input
+                type="text"
+                value={ans1}
+                onChange={(e) => { setAns1(e.target.value); setError(""); }}
+                required
+                placeholder="Answer"
+                style={styles.input}
+              />
             </div>
 
             <div style={styles.inputGroup}>
-              <label style={styles.label}>Confirm Password</label>
-              <div style={{position: 'relative'}}>
-                <input
-                  type={showConfirm ? "text" : "password"}
-                  value={confirm}
-                  onChange={(e) => { setConfirm(e.target.value); setError(""); }}
-                  required
-                  placeholder="••••••••"
-                  style={styles.input}
-                />
-                <button type="button" onClick={() => setShowConfirm(!showConfirm)} style={styles.eyeBtn}>
-                  {showConfirm ? <EyeOff size={18} /> : <Eye size={18} />}
-                </button>
-              </div>
+              <label style={styles.label}>Q2: What city were you born in?</label>
+              <input
+                type="text"
+                value={ans2}
+                onChange={(e) => { setAns2(e.target.value); setError(""); }}
+                required
+                placeholder="Answer"
+                style={styles.input}
+              />
+            </div>
+
+            <div style={styles.infoBox}>
+              <AlertTriangle size={14} color="#854d0e" />
+              <span>Answers are case-insensitive.</span>
             </div>
 
             {error && <div style={styles.errorBanner}>{error}</div>}
@@ -120,10 +103,10 @@ const ResetPassword = () => {
             >
               {loading ? (
                 <div style={{display: 'flex', alignItems: 'center', gap: '8px', justifyContent: 'center'}}>
-                  <Loader2 className="animate-spin" size={20} /> Updating...
+                  <Loader2 className="animate-spin" size={20} /> Verifying...
                 </div>
               ) : (
-                "Update Password"
+                "Verify Identity"
               )}
             </button>
           </form>
@@ -139,7 +122,7 @@ const styles = {
     display: 'flex', alignItems: 'center', justifyContent: 'center',
     backgroundColor: '#f0fdfa', fontFamily: "'Inter', sans-serif", padding: '20px'
   },
-  contentWrapper: { width: '100%', maxWidth: '440px' },
+  contentWrapper: { width: '100%', maxWidth: '480px' },
   successWrapper: { textAlign: 'center', animation: 'fadeIn 0.5s ease' },
   header: { textAlign: 'center', marginBottom: '24px' },
   iconCircle: {
@@ -153,6 +136,7 @@ const styles = {
   title: { fontSize: '24px', fontWeight: '800', color: '#1e293b', marginBottom: '8px' },
   successTitle: { fontSize: '28px', fontWeight: '800', color: '#1e293b', marginBottom: '8px' },
   subtitle: { fontSize: '14px', color: '#64748b' },
+  
   glassCard: {
     backgroundColor: 'rgba(255, 255, 255, 0.7)', backdropFilter: 'blur(24px)',
     borderRadius: '24px', padding: '32px', border: '1px solid rgba(255, 255, 255, 0.5)',
@@ -164,11 +148,11 @@ const styles = {
   input: {
     width: '100%', padding: '12px 16px', borderRadius: '12px', border: '1px solid #e2e8f0',
     backgroundColor: 'rgba(255, 255, 255, 0.8)', fontSize: '14px', outline: 'none',
-    boxSizing: 'border-box', paddingRight: '40px'
+    boxSizing: 'border-box'
   },
-  eyeBtn: {
-    position: 'absolute', right: '12px', top: '50%', transform: 'translateY(-50%)',
-    background: 'none', border: 'none', cursor: 'pointer', color: '#94a3b8'
+  infoBox: {
+    display: 'flex', alignItems: 'center', gap: '8px', padding: '10px 14px',
+    backgroundColor: '#fef9c3', borderRadius: '10px', color: '#854d0e', fontSize: '12px', fontWeight: '500'
   },
   errorBanner: {
     backgroundColor: '#fee2e2', color: '#ef4444', fontSize: '13px', fontWeight: '500',
@@ -186,4 +170,4 @@ const styles = {
   }
 };
 
-export default ResetPassword;
+export default SecurityQuestions;

@@ -12,7 +12,7 @@ const PatientDetails = () => {
         <div style={styles.infoBox}>
           <h4>General Info</h4>
           <p><strong>Name:</strong> Koushik Jewargi</p>
-          <p><strong>Age:</strong> 22 Years</p>
+          <p><strong>Age:</strong> 19 Years</p>
           <p><strong>Blood Group:</strong> O+ Positive</p>
         </div>
         <div style={styles.vitalsBox}>
