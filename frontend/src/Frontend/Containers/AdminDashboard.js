@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 import { Users, Calendar, Activity, TrendingUp, AlertTriangle, ArrowUpRight } from "lucide-react";
 
 const AdminDashboard = () => {
-  // Mock Data (Same as Vibe)
+  // Mock Data 
   const stats = [
     { icon: Users, label: "Total Doctors", value: "24", change: "+3" },
     { icon: Users, label: "Total Patients", value: "1,284", change: "+12%" },
@@ -91,7 +91,7 @@ const AdminDashboard = () => {
   );
 };
 
-// --- STYLES (Converted from Tailwind to CSS) ---
+
 const styles = {
   container: { padding: '40px 5%', backgroundColor: '#f8fafc', minHeight: '100vh', fontFamily: "'Inter', sans-serif" },
   banner: {

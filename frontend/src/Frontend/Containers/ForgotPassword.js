@@ -80,7 +80,7 @@ const ForgotPassword = () => {
 
 const styles = {
   container: {
-    // FIX: Centering
+    
     minHeight: 'calc(100vh - 70px)', 
     display: 'flex', alignItems: 'center', justifyContent: 'center',
     backgroundColor: '#f0fdfa', fontFamily: "'Inter', sans-serif", padding: '20px'

@@ -71,7 +71,7 @@ const DoctorDashboard = () => {
   );
 };
 
-// --- STYLES (Reused Vibe Theme) ---
+ 
 const styles = {
   container: { padding: '40px 5%', backgroundColor: '#f8fafc', minHeight: '100vh', fontFamily: "'Inter', sans-serif" },
   header: { marginBottom: '40px' },

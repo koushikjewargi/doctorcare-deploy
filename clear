@@ -1,0 +1,23 @@
+[33mcommit 5a1778ed8d55a0edf08da74a4db9302eb27d770d[m[33m ([m[1;36mHEAD[m[33m -> [m[1;32mfeature/add-auth[m[33m, [m[1;31morigin/feature/add-auth[m[33m)[m
+Author: koushik jewargi <jewargikoushik@gmail.com>
+Date:   Tue Feb 3 22:21:40 2026 +0530
+
+    "Updated The UI: Implemented professional 4-digit OTP input with auto-focus logic"
+
+[33mcommit 28ea7c8c798de3ad96dba6a3fb16809ad37f7eff[m
+Author: koushik jewargi <jewargikoushik@gmail.com>
+Date:   Tue Feb 3 00:18:16 2026 +0530
+
+    Added the pages and Finalized navigation links between Auth screens
+
+[33mcommit 13fbc2dad1a27cc64c60fb5ef0effd35cf36ee80[m[33m ([m[1;31morigin/main[m[33m, [m[1;32mmain[m[33m)[m
+Author: koushik jewargi <jewargikoushik@gmail.com>
+Date:   Fri Jan 30 17:05:31 2026 +0530
+
+    Structure: Added placeholder files to initialize all project folders
+
+[33mcommit acaba20b29edc5bee4d1eed83f5f016330ec387e[m
+Author: koushik jewargi <jewargikoushik@gmail.com>
+Date:   Fri Jan 30 16:53:07 2026 +0530
+
+    Initial commit: Added AppForge project structure and Home UI

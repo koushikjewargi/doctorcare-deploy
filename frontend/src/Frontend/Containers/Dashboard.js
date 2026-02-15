@@ -63,7 +63,7 @@ const styles = {
   sideLinkActive: { textDecoration: 'none', color: '#fff', backgroundColor: '#00d09c', padding: '10px', borderRadius: '8px', fontWeight: 'bold', fontSize: '14px' },
   adminLink: { textDecoration: 'none', color: '#ff7f00', fontWeight: 'bold', padding: '10px', backgroundColor: '#fff5eb', borderRadius: '8px', fontSize: '14px' },
   mainContent: { 
-    flex: '1 1 350px', // Content takes rest of space
+    flex: '1 1 350px', 
     padding: 'clamp(20px, 4vw, 40px)', 
     minWidth: '300px' 
   },
@@ -74,7 +74,7 @@ const styles = {
     backgroundColor: '#fff', 
     padding: '20px', 
     borderRadius: '15px', 
-    flex: '1 1 150px', // Stat cards stack on small screens
+    flex: '1 1 150px', 
     boxShadow: '0 4px 12px rgba(0,0,0,0.05)',
     textAlign: 'center'
   }

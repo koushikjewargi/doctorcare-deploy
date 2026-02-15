@@ -13,7 +13,7 @@ const Feedback = () => {
   const handleSubmit = (e) => {
     e.preventDefault();
     setSubmitted(true);
-    // In real app, you'd send this to backend
+    // In real app, we send this to backend
     setTimeout(() => {
       navigate("/menu"); // Go back home after 2 seconds
     }, 2000);

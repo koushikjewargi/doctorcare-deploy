@@ -196,13 +196,13 @@ const Login = () => {
 
 const styles = {
   pageContainer: {
-    // FIX: Subtract Header height so it centers perfectly in view
+    
     minHeight: 'calc(100vh - 70px)', 
     display: 'flex', 
     flexDirection: 'column', 
     backgroundColor: '#fff', 
     fontFamily: "'Inter', sans-serif",
-    justifyContent: 'center', // This centers vertically
+    justifyContent: 'center',  
     alignItems: 'center',
     padding: '20px'
   },
