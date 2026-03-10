@@ -80,8 +80,8 @@ export default function BookingPage() {
       <main className="center appointment-page">
 
         {/* Selected Doctor Summary */}
-        <div className="appointment-section" style={{ display: 'flex', alignItems: 'center', gap: 18 }}>
-          <img src={selectedDoctor.img} alt={selectedDoctor.name} style={{ width: 96, height: 96, borderRadius: 12, objectFit: 'cover' }} />
+        <div className="appointment-section booking-summary">
+          <img src={selectedDoctor.img} alt={selectedDoctor.name} className="doctor-img" />
           <div style={{ flex: 1 }}>
             <div style={{ fontSize: 20, fontWeight: 800 }}>{selectedDoctor.name}</div>
             <div style={{ color: '#10b981', fontWeight: 700, marginTop: 6 }}>₹{selectedDoctor.price}</div>
@@ -92,7 +92,7 @@ export default function BookingPage() {
         </div>
 
         {/* Calendar and Right Side Content Section */}
-        <div style={{ display: 'flex', gap: 20, width: '100%', maxWidth: '900px' }}>
+        <div className="booking-content">
           {/* Calendar Section - Left Side */}
           <div className="appointment-section" style={{ flex: '0 0 45%' }}>
             <div className="calendar-container">

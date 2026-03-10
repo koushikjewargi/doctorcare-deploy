@@ -1,7 +1,8 @@
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { IndianRupee } from 'lucide-react';
 
-import cashIcon from '../Assets/assets/cash.svg';
+// icons for methods
 import upiIcon from '../Assets/assets/upi.svg';
 import visaIcon from '../Assets/assets/visa.svg';
 
@@ -56,7 +57,7 @@ export default function PaymentPage() {
         <div className="payment-methods">
           <label className="payment-method">
             <div className="left">
-              <img src={cashIcon} alt="cash" />
+              <IndianRupee size={24} strokeWidth={2} />
               <div>Cash</div>
             </div>
             <input type="radio" name="pay" value="Cash" checked={paymentMethod === 'Cash'} onChange={(e) => setPaymentMethod(e.target.value)} />
