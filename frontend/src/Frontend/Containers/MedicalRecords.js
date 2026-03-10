@@ -1,6 +1,13 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 
 const MedicalRecords = () => {
+  const [bookings, setBookings] = useState([]);
+
+  useEffect(() => {
+    const stored = JSON.parse(localStorage.getItem('bookings') || '[]');
+    setBookings(stored);
+  }, []);
+
   const records = [
     { id: 1, date: "10 Feb 2026", doctor: "Dr. Sandeep Kumar", type: "Cardiology", status: "Completed" },
     { id: 2, date: "25 Jan 2026", doctor: "Dr. Anjali Rao", type: "Neurology", status: "Completed" },
@@ -20,6 +27,24 @@ const MedicalRecords = () => {
           </div>
         ))}
       </div>
+
+      {bookings.length > 0 && (
+        <div style={{ marginTop: '40px' }}>
+          <h2 style={styles.title}>Booking History</h2>
+          <div style={{ display: 'flex', flexDirection: 'column', gap: '15px' }}>
+            {bookings.map(b => (
+              <div key={b.id} style={styles.recordCard}>
+                <div style={styles.info}>
+                  <h4 style={styles.date}>{new Date(b.date).toLocaleString()}</h4>
+                  <p style={styles.docName}>ID: {b.id} • {b.payment || '–'}</p>
+                  <p style={styles.docName}>Status: {b.status}</p>
+                </div>
+                <button style={styles.downloadBtn} onClick={() => alert('Download PDF functionality coming soon')}>📄 Download PDF</button>
+              </div>
+            ))}
+          </div>
+        </div>
+      )}
     </div>
   );
 };

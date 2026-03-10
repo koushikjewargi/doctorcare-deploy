@@ -1,6 +1,10 @@
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
+import visaIcon from '../Assets/assets/visa.svg';
+import upiIcon from '../Assets/assets/upi.svg';
+import offlineIcon from '../Assets/assets/offline.svg';
+
 export default function PaymentPage() {
   const navigate = useNavigate();
   const [paymentMethod, setPaymentMethod] = useState('Card');
@@ -44,7 +48,7 @@ export default function PaymentPage() {
         <div className="payment-methods">
           <label className="payment-method">
             <div className="left">
-              <img src="/src/Frontend/Assets/assets/visa.svg" alt="visa" />
+              <img src={visaIcon} alt="visa" />
               <div>Credit Card</div>
             </div>
             <input type="radio" name="pay" value="Card" checked={paymentMethod === 'Card'} onChange={(e) => setPaymentMethod(e.target.value)} />
@@ -52,7 +56,7 @@ export default function PaymentPage() {
 
           <label className="payment-method">
             <div className="left">
-              <img src="/src/Frontend/Assets/assets/upi.svg" alt="upi" />
+              <img src={upiIcon} alt="upi" />
               <div>UPI</div>
             </div>
             <input type="radio" name="pay" value="UPI" checked={paymentMethod === 'UPI'} onChange={(e) => setPaymentMethod(e.target.value)} />
@@ -60,7 +64,7 @@ export default function PaymentPage() {
 
           <label className="payment-method">
             <div className="left">
-              <img src="/src/Frontend/Assets/assets/offline.svg" alt="offline" />
+              <img src={offlineIcon} alt="offline" />
               <div>Offline</div>
             </div>
             <input type="radio" name="pay" value="Offline" checked={paymentMethod === 'Offline'} onChange={(e) => setPaymentMethod(e.target.value)} />
