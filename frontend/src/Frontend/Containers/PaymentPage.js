@@ -1,10 +1,11 @@
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { IndianRupee } from 'lucide-react';
+import { IndianRupee, CreditCard } from 'lucide-react';
+// import the UPI svg as a React component (CRA/webpack SVGR support)
+import { ReactComponent as UpiSvg } from '../Assets/assets/upi.svg';
 
-// icons for methods
-import upiIcon from '../Assets/assets/upi.svg';
-import visaIcon from '../Assets/assets/visa.svg';
+// NOTE: we switched away from external <img> tags to inline components to avoid
+// bundling/404 issues. The Visa logo remains a lucide icon (CreditCard).
 
 export default function PaymentPage() {
   const navigate = useNavigate();
@@ -65,7 +66,7 @@ export default function PaymentPage() {
 
           <label className="payment-method">
             <div className="left">
-              <img src={upiIcon} alt="upi" />
+              <UpiSvg />
               <div>UPI</div>
             </div>
             <input type="radio" name="pay" value="UPI" checked={paymentMethod === 'UPI'} onChange={(e) => setPaymentMethod(e.target.value)} />
@@ -73,7 +74,7 @@ export default function PaymentPage() {
 
           <label className="payment-method">
             <div className="left">
-              <img src={visaIcon} alt="visa" />
+              <CreditCard size={24} strokeWidth={2} />
               <div>Credit Card</div>
             </div>
             <input type="radio" name="pay" value="Card" checked={paymentMethod === 'Card'} onChange={(e) => setPaymentMethod(e.target.value)} />
@@ -136,38 +137,6 @@ export default function PaymentPage() {
             <div className="form-footer">
               <button className="btn-book" onClick={() => navigate('/')}>Cancel</button>
               <button className="btn-book" onClick={handleUpiPay} style={{ background: '#0f172a', color: '#fff' }}>Pay via UPI</button>
-            </div>
-          </>
-        )}
-
-        {paymentMethod === 'Card' && (
-          <>
-            <div className="form-group">
-              <label>Card Holder Name</label>
-              <input value={cardHolder} onChange={(e) => setCardHolder(e.target.value)} placeholder="Enter name here" />
-            </div>
-
-            <div className="form-group">
-              <label>Card Number</label>
-              <input value={cardNumber} onChange={(e) => setCardNumber(e.target.value)} placeholder="0000 0000 0000 0000" />
-            </div>
-
-            <div className="row">
-              <input className="small-input" value={expiry} onChange={(e) => setExpiry(e.target.value)} placeholder="MM/YY" />
-              <input className="small-input" value={cvv} onChange={(e) => setCvv(e.target.value)} placeholder="CVV" />
-            </div>
-
-            <div style={{ marginTop: 12 }}>
-              <label style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
-                <input type="checkbox" checked={saveCard} onChange={(e) => setSaveCard(e.target.checked)} /> Save card securely for future payments
-              </label>
-            </div>
-
-            {error && <small className="error">{error}</small>}
-
-            <div className="form-footer">
-              <button className="btn-book" onClick={() => navigate('/')}>Cancel</button>
-              <button className="btn-book" onClick={handleAddCard} style={{ background: '#0f172a', color: '#fff' }}>Add Card</button>
             </div>
           </>
         )}
