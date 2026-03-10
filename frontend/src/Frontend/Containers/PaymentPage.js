@@ -1,13 +1,13 @@
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
-import visaIcon from '../Assets/assets/visa.svg';
+import cashIcon from '../Assets/assets/cash.svg';
 import upiIcon from '../Assets/assets/upi.svg';
-import offlineIcon from '../Assets/assets/offline.svg';
+import visaIcon from '../Assets/assets/visa.svg';
 
 export default function PaymentPage() {
   const navigate = useNavigate();
-  const [paymentMethod, setPaymentMethod] = useState('Card');
+  const [paymentMethod, setPaymentMethod] = useState('Cash');
   const [upiId, setUpiId] = useState('');
   const [cardHolder, setCardHolder] = useState('');
   const [cardNumber, setCardNumber] = useState('');
@@ -40,6 +40,14 @@ export default function PaymentPage() {
     navigate('/success');
   };
 
+  const handleCashPay = () => {
+    const bookings = JSON.parse(localStorage.getItem('bookings') || '[]');
+    const newBooking = { id: Date.now(), date: new Date().toLocaleString(), status: 'PENDING', payment: 'CASH' };
+    bookings.push(newBooking);
+    localStorage.setItem('bookings', JSON.stringify(bookings));
+    navigate('/success');
+  };
+
   return (
     <main className="center">
       <div className="form">
@@ -48,10 +56,10 @@ export default function PaymentPage() {
         <div className="payment-methods">
           <label className="payment-method">
             <div className="left">
-              <img src={visaIcon} alt="visa" />
-              <div>Credit Card</div>
+              <img src={cashIcon} alt="cash" />
+              <div>Cash</div>
             </div>
-            <input type="radio" name="pay" value="Card" checked={paymentMethod === 'Card'} onChange={(e) => setPaymentMethod(e.target.value)} />
+            <input type="radio" name="pay" value="Cash" checked={paymentMethod === 'Cash'} onChange={(e) => setPaymentMethod(e.target.value)} />
           </label>
 
           <label className="payment-method">
@@ -64,10 +72,10 @@ export default function PaymentPage() {
 
           <label className="payment-method">
             <div className="left">
-              <img src={offlineIcon} alt="offline" />
-              <div>Offline</div>
+              <img src={visaIcon} alt="visa" />
+              <div>Credit Card</div>
             </div>
-            <input type="radio" name="pay" value="Offline" checked={paymentMethod === 'Offline'} onChange={(e) => setPaymentMethod(e.target.value)} />
+            <input type="radio" name="pay" value="Card" checked={paymentMethod === 'Card'} onChange={(e) => setPaymentMethod(e.target.value)} />
           </label>
         </div>
 
@@ -105,6 +113,18 @@ export default function PaymentPage() {
           </>
         )}
 
+        {paymentMethod === 'Cash' && (
+          <>
+            <div className="form-group">
+              <p>Pay with cash at the center. Click Confirm to reserve your appointment and pay in cash upon arrival.</p>
+            </div>
+            <div className="form-footer">
+              <button className="btn-book" onClick={() => navigate('/')}>Cancel</button>
+              <button className="btn-book" onClick={handleCashPay} style={{ background: '#0f172a', color: '#fff' }}>Confirm</button>
+            </div>
+          </>
+        )}
+
         {paymentMethod === 'UPI' && (
           <>
             <div className="form-group">
@@ -119,20 +139,34 @@ export default function PaymentPage() {
           </>
         )}
 
-        {paymentMethod === 'Offline' && (
+        {paymentMethod === 'Card' && (
           <>
             <div className="form-group">
-              <p>Choose offline payment at the center. Click Confirm to reserve your appointment and pay at the center.</p>
+              <label>Card Holder Name</label>
+              <input value={cardHolder} onChange={(e) => setCardHolder(e.target.value)} placeholder="Enter name here" />
             </div>
+
+            <div className="form-group">
+              <label>Card Number</label>
+              <input value={cardNumber} onChange={(e) => setCardNumber(e.target.value)} placeholder="0000 0000 0000 0000" />
+            </div>
+
+            <div className="row">
+              <input className="small-input" value={expiry} onChange={(e) => setExpiry(e.target.value)} placeholder="MM/YY" />
+              <input className="small-input" value={cvv} onChange={(e) => setCvv(e.target.value)} placeholder="CVV" />
+            </div>
+
+            <div style={{ marginTop: 12 }}>
+              <label style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
+                <input type="checkbox" checked={saveCard} onChange={(e) => setSaveCard(e.target.checked)} /> Save card securely for future payments
+              </label>
+            </div>
+
+            {error && <small className="error">{error}</small>}
+
             <div className="form-footer">
               <button className="btn-book" onClick={() => navigate('/')}>Cancel</button>
-              <button className="btn-book" onClick={() => {
-                const bookings = JSON.parse(localStorage.getItem('bookings') || '[]');
-                const newBooking = { id: Date.now(), date: new Date().toLocaleString(), status: 'PENDING', payment: 'OFFLINE' };
-                bookings.push(newBooking);
-                localStorage.setItem('bookings', JSON.stringify(bookings));
-                navigate('/success');
-              }} style={{ background: '#0f172a', color: '#fff' }}>Confirm</button>
+              <button className="btn-book" onClick={handleAddCard} style={{ background: '#0f172a', color: '#fff' }}>Add Card</button>
             </div>
           </>
         )}
