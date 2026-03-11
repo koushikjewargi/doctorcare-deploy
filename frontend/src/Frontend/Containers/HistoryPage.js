@@ -5,6 +5,15 @@ export default function HistoryPage() {
   const navigate = useNavigate();
   const [bookings, setBookings] = useState([]);
 
+  const goHome = () => {
+    const role = localStorage.getItem('role');
+    if (role) {
+      navigate('/menu');
+    } else {
+      navigate('/');
+    }
+  };
+
   useEffect(() => {
     const stored = JSON.parse(localStorage.getItem('bookings') || '[]');
     setBookings(stored);
@@ -83,7 +92,7 @@ export default function HistoryPage() {
       </div>
 
       <div style={{ marginTop: 18 }}>
-        <button className="btn-book" onClick={() => navigate('/')}>Back Home</button>
+        <button className="btn-book" onClick={goHome}>Back Home</button>
       </div>
     </main>
   );

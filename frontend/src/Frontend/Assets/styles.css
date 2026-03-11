@@ -236,6 +236,59 @@ main.center {
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
 }
 
+/* layout helpers for booking page */
+.booking-content {
+  display: flex;
+  gap: 20px;
+  width: 100%;
+  max-width: 900px;
+  margin: 0 auto;
+}
+
+.booking-summary {
+  display: flex;
+  align-items: center;
+  gap: 18px;
+}
+
+.doctor-img {
+  width: 96px;
+  height: 96px;
+  border-radius: 12px;
+  object-fit: cover;
+}
+
+/* responsive adjustments */
+@media (max-width: 768px) {
+  .booking-content {
+    flex-direction: column;
+  }
+
+  .booking-summary {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .booking-summary img {
+    width: 80px;
+    height: 80px;
+    margin-bottom: 12px;
+  }
+
+  .date-selectors {
+    grid-template-columns: 1fr;
+  }
+
+  .patient-form,
+  .form {
+    padding: 20px;
+  }
+
+  .row {
+    grid-template-columns: 1fr;
+  }
+}
+
 .section-title {
   font-size: 16px;
   font-weight: 700;
@@ -480,7 +533,8 @@ main.center {
   flex: 1;
 }
 
-.payment-method img {
+.payment-method img,
+.payment-method svg {
   width: 40px;
   height: 40px;
   object-fit: contain;

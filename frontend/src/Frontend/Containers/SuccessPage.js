@@ -5,6 +5,16 @@ export default function SuccessPage() {
   const navigate = useNavigate();
   const [latest, setLatest] = useState(null);
 
+  const goHome = () => {
+    // route patient back into app instead of splash/logout
+    const role = localStorage.getItem('role');
+    if (role) {
+      navigate('/menu');
+    } else {
+      navigate('/');
+    }
+  };
+
   useEffect(() => {
     const bookings = JSON.parse(localStorage.getItem('bookings') || '[]');
     if (bookings.length) {
@@ -38,8 +48,8 @@ export default function SuccessPage() {
         )}
 
         <div style={{ display: 'flex', gap: 12, marginTop: 20 }}>
-          <button className="btn-book" onClick={() => navigate('/history')}>View Booking History</button>
-          <button className="btn-book" onClick={() => navigate('/')}>Back Home</button>
+          <button className="btn-book" onClick={() => navigate('/records')}>View All Records</button>
+          <button className="btn-book" onClick={goHome}>Back Home</button>
         </div>
       </div>
     </main>

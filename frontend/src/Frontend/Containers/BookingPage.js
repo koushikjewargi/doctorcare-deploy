@@ -4,7 +4,7 @@ import { useNavigate } from 'react-router-dom';
 export default function BookingPage() {
   const navigate = useNavigate();
   const [selectedDoctor, setSelectedDoctor] = useState(null);
-  const [selectedDate, setSelectedDate] = useState(new Date(2026, 1, 10));
+  const [selectedDate, setSelectedDate] = useState(new Date());
   const [selectedTime, setSelectedTime] = useState('02:00');
   const [selectedReminder, setSelectedReminder] = useState('60');
 
@@ -80,8 +80,8 @@ export default function BookingPage() {
       <main className="center appointment-page">
 
         {/* Selected Doctor Summary */}
-        <div className="appointment-section" style={{ display: 'flex', alignItems: 'center', gap: 18 }}>
-          <img src={selectedDoctor.img} alt={selectedDoctor.name} style={{ width: 96, height: 96, borderRadius: 12, objectFit: 'cover' }} />
+        <div className="appointment-section booking-summary">
+          <img src={selectedDoctor.img} alt={selectedDoctor.name} className="doctor-img" />
           <div style={{ flex: 1 }}>
             <div style={{ fontSize: 20, fontWeight: 800 }}>{selectedDoctor.name}</div>
             <div style={{ color: '#10b981', fontWeight: 700, marginTop: 6 }}>₹{selectedDoctor.price}</div>
@@ -91,73 +91,83 @@ export default function BookingPage() {
           </div>
         </div>
 
-        {/* Calendar Section */}
-        <div className="appointment-section">
-          <div className="calendar-container">
-            <div className="calendar-header">
-              <h3>{monthNames[selectedDate.getMonth()]} {selectedDate.getFullYear()}</h3>
-              <div className="calendar-nav">
-                <button className="calendar-btn" onClick={prevMonth}>‹</button>
-                <button className="calendar-btn" onClick={nextMonth}>›</button>
+        {/* Calendar and Right Side Content Section */}
+        <div className="booking-content">
+          {/* Calendar Section - Left Side */}
+          <div className="appointment-section" style={{ flex: '0 0 45%' }}>
+            <div className="calendar-container">
+              <div className="calendar-header">
+                <h3>{monthNames[selectedDate.getMonth()]} {selectedDate.getFullYear()}</h3>
+                <div className="calendar-nav">
+                  <button className="calendar-btn" onClick={prevMonth}>‹</button>
+                  <button className="calendar-btn" onClick={nextMonth}>›</button>
+                </div>
+              </div>
+
+              <div className="calendar-weekdays">
+                {['Mo', 'Tu', 'We', 'Th', 'Fr', 'Sa', 'Su'].map(day => (
+                  <div key={day} className="weekday">{day}</div>
+                ))}
+              </div>
+
+              <div className="calendar-days">
+                {days.map((day, idx) => {
+                  const currentDate = new Date(selectedDate.getFullYear(), selectedDate.getMonth(), day);
+                  const today = new Date();
+                  today.setHours(0, 0, 0, 0);
+                  const isPast = day && currentDate < today;
+                  return (
+                    <button
+                      key={idx}
+                      className={`calendar-day ${day === selectedDate.getDate() ? 'active' : ''}`}
+                      onClick={() => day && !isPast && setSelectedDate(new Date(selectedDate.getFullYear(), selectedDate.getMonth(), day))}
+                      disabled={!day || isPast}
+                    >
+                      {day}
+                    </button>
+                  );
+                })}
+              </div>
+            </div>
+          </div>
+
+          {/* Right Side Content */}
+          <div style={{ flex: '0 0 55%', display: 'flex', flexDirection: 'column', gap: 16 }}>
+            {/* Available Time Section */}
+            <div className="appointment-section" style={{ margin: 0 }}>
+              <h4 className="section-title">Available Time</h4>
+              <div className="time-slots">
+                {timeSlots.map((slot) => (
+                  <button
+                    key={slot.time}
+                    className={`time-slot ${selectedTime === slot.time ? 'active' : ''}`}
+                    onClick={() => setSelectedTime(slot.time)}
+                  >
+                    <span className="time-text">{slot.label}</span>
+                  </button>
+                ))}
               </div>
             </div>
 
-            <div className="calendar-weekdays">
-              {['Mo', 'Tu', 'We', 'Th', 'Fr', 'Sa', 'Su'].map(day => (
-                <div key={day} className="weekday">{day}</div>
-              ))}
+            {/* Reminder Section */}
+            <div className="appointment-section" style={{ margin: 0 }}>
+              <h4 className="section-title">Reminder Me Before</h4>
+              <div className="reminder-slots">
+                {reminderOptions.map((option) => (
+                  <button
+                    key={option.value}
+                    className={`reminder-slot ${selectedReminder === option.value ? 'active' : ''}`}
+                    onClick={() => setSelectedReminder(option.value)}
+                  >
+                    <span className="reminder-text">{option.label}</span>
+                  </button>
+                ))}
+              </div>
             </div>
 
-            <div className="calendar-days">
-              {days.map((day, idx) => (
-                <button
-                  key={idx}
-                  className={`calendar-day ${day === selectedDate.getDate() ? 'active' : ''}`}
-                  onClick={() => day && setSelectedDate(new Date(selectedDate.getFullYear(), selectedDate.getMonth(), day))}
-                  disabled={!day}
-                >
-                  {day}
-                </button>
-              ))}
-            </div>
+            {/* Confirm Button */}
+            <button className="btn-confirm" onClick={handleConfirm} style={{ width: '100%' }}>Confirm</button>
           </div>
-        </div>
-
-        {/* Available Time Section */}
-        <div className="appointment-section">
-          <h4 className="section-title">Available Time</h4>
-          <div className="time-slots">
-            {timeSlots.map((slot) => (
-              <button
-                key={slot.time}
-                className={`time-slot ${selectedTime === slot.time ? 'active' : ''}`}
-                onClick={() => setSelectedTime(slot.time)}
-              >
-                <span className="time-text">{slot.label}</span>
-              </button>
-            ))}
-          </div>
-        </div>
-
-        {/* Reminder Section */}
-        <div className="appointment-section">
-          <h4 className="section-title">Reminder Me Before</h4>
-          <div className="reminder-slots">
-            {reminderOptions.map((option) => (
-              <button
-                key={option.value}
-                className={`reminder-slot ${selectedReminder === option.value ? 'active' : ''}`}
-                onClick={() => setSelectedReminder(option.value)}
-              >
-                <span className="reminder-text">{option.label}</span>
-              </button>
-            ))}
-          </div>
-        </div>
-
-        {/* Confirm Button */}
-        <div style={{ width: '100%', display: 'flex', justifyContent: 'center' }}>
-          <button className="btn-confirm" onClick={handleConfirm}>Confirm</button>
         </div>
       </main>
     );
