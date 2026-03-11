@@ -97,18 +97,6 @@ export default function PatientDetailsPage() {
             <p style={{ margin: '4px 0', color: '#166534' }}><strong>Price:</strong> ₹{appointmentData.price}</p>
           </div>
         )}
-        
-        <div style={{ marginBottom: '20px', textAlign: 'center' }}>
-          <button 
-            className="btn-book" 
-            onClick={loadMyDetails}
-            style={{ background: '#10b981', color: '#fff', border: 'none', padding: '10px 20px', borderRadius: '8px' }}
-          >
-            Use My Details
-          </button>
-          {useMyDetails && <p style={{ marginTop: '10px', color: '#10b981', fontSize: '14px' }}>Using your saved details</p>}
-        </div>
-
         <div className="form-group">
           <label>Name</label>
           <input
