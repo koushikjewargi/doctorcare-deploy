@@ -1,5 +1,6 @@
 import React from 'react';
 import { BrowserRouter as Router, Routes, Route, Navigate, useLocation } from 'react-router-dom';
+import './Frontend/Assets/styles.css';
 
 // --- UTILS ---
 import ScrollToTop from './Frontend/Components/ScrollToTop';
@@ -40,6 +41,16 @@ import PatientDetails from './Frontend/Containers/PatientDetails';
 // --- DIAGNOSTICS ---
 import Booking from './Frontend/Containers/Booking';
 import Payment from './Frontend/Containers/Payment';
+import HomePage from './Frontend/Containers/HomePage';
+import BookingPage from './Frontend/Containers/BookingPage';
+import PatientDetailsPage from './Frontend/Containers/PatientDetailsPage';
+import PaymentPage from './Frontend/Containers/PaymentPage';
+import SuccessPage from './Frontend/Containers/SuccessPage';
+import FailurePage from './Frontend/Containers/FailurePage';
+import HistoryPage from './Frontend/Containers/HistoryPage';
+import BrandingHeader from './Frontend/Components/BrandingHeader';
+import CustomHeader from './Frontend/Components/CustomHeader';
+import CustomSidebar from './Frontend/Components/CustomSidebar';
 
 // 🔒 PROTECTED ROUTE COMPONENT (The Gatekeeper)
 const ProtectedRoute = ({ children }) => {
@@ -117,8 +128,18 @@ function App() {
           <Route path="/patient-details" element={<ProtectedRoute><PatientDetails /></ProtectedRoute>} />
 
           {/* Diagnostics */}
-          <Route path="/booking" element={<ProtectedRoute><Booking /></ProtectedRoute>} />
-          <Route path="/payment" element={<ProtectedRoute><Payment /></ProtectedRoute>} />
+          <Route path="/booking" element={<BookingPage />} />
+          <Route path="/payment" element={<PaymentPage />} />
+          <Route path="/patient" element={<PatientDetailsPage />} />
+          <Route path="/success" element={<SuccessPage />} />
+          <Route path="/failure" element={<FailurePage />} />
+          <Route path="/history" element={<HistoryPage />} />
+          
+          {/* Alternative Diagnostics Routes */}
+          <Route path="/home" element={<HomePage />} />
+          <Route path="/booking-page" element={<BookingPage />} />
+          <Route path="/patient-page" element={<PatientDetailsPage />} />
+          <Route path="/payment-page" element={<PaymentPage />} />
 
           {/* System Pages */}
           <Route path="/feedback" element={<ProtectedRoute><Feedback /></ProtectedRoute>} />
