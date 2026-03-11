@@ -1,132 +1,265 @@
 import { useNavigate } from 'react-router-dom';
+import { useState, useEffect } from 'react';
+import '../../../App.css';
 
 export default function HomePage() {
   const navigate = useNavigate();
+  const [doctors, setDoctors] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [searchTerm, setSearchTerm] = useState('');
 
-  const features = [
-    {
-      icon: '🏠',
-      title: 'Free Home Sample Pickup',
-      description: 'Get samples collected from your home',
-      color: '#5B5FDE'
-    },
-    {
-      icon: '👨‍⚕️',
-      title: 'Trusted Medical Labs',
-      description: 'Partnered with certified laboratories',
-      color: '#FF6B6B'
-    },
-    {
-      icon: '📋',
-      title: 'E-Reports in 24-72 Hours',
-      description: 'Get digital reports quickly',
-      color: '#FFA500'
-    },
-    {
-      icon: '👨‍⚕️',
-      title: 'Free Follow-up with Doctor',
-      description: 'Expert consultation included',
-      color: '#10B981'
-    }
-  ];
+  useEffect(() => {
+    const mockDoctors = [
+      {
+        id: 1,
+        name: 'Dr. S. K. Sen',
+        specialty: 'Dentist',
+        experience: '12 Years',
+        rating: 4.8,
+        reviews: '142',
+        image: 'https://i.ibb.co/WNkDrkf0/Screenshot-2026-02-03-at-4-15-20-PM.png',
+        price: 500
+      },
+      {
+        id: 2,
+        name: 'Dr. P K Das',
+        specialty: 'General',
+        experience: '11 Years',
+        rating: 4.75,
+        reviews: '215',
+        image: 'https://i.ibb.co/pmzCVDy/Screenshot-2026-02-03-at-4-15-04-PM.png',
+        price: 600
+      },
+      {
+        id: 3,
+        name: 'Dr. Suman Ghosh',
+        specialty: 'Dentist',
+        experience: '14 Years',
+        rating: 4.43,
+        reviews: '287',
+        image: 'https://i.ibb.co/Pvf691zF/Screenshot-2026-02-03-at-4-14-29-PM.png',
+        price: 700
+      }
+    ];
+    setDoctors(mockDoctors);
+    setLoading(false);
+  }, []);
 
-  const offers = [
-    {
-      percent: '45%',
-      description: 'Off on Full Body Checkup'
-    },
-    {
-      percent: '10%',
-      description: 'Healthcash Back on all tests'
-    }
-  ];
+  const handleDoctorSelect = (doctor) => {
+    navigate('/diagnostics/booking', { state: { selectedDoctor: doctor } });
+  };
+
+  const filteredDoctors = doctors.filter(doc =>
+    doc.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
+    doc.specialty.toLowerCase().includes(searchTerm.toLowerCase())
+  );
+
+  if (loading) {
+    return <main className="center" style={{ padding: '40px 20px' }}>Loading...</main>;
+  }
 
   return (
-    <main className="main-content home-main">
-      {/* Find Your Specialist */}
-      <section className="search-panel">
-        <h2>Find Your Specialist</h2>
-        <div className="search-wrapper">
-          <form className="search-bar" onSubmit={(e)=>e.preventDefault()}>
-            <input type="text" placeholder="Search by name or specialty..." />
-            <button type="submit">🔍</button>
-          </form>
-        </div>
-      </section>
-
-      <section className="specialist-list">
-        {[
-          {name:'Dr. Sandeep Kumar', meta:'Cardiologist • 12 Years Exp', price:'₹800'},
-          {name:'Dr. Anjali Rao', meta:'Neurologist • 10 Years Exp', price:'₹1000'},
-          {name:'Dr. Vikram Singh', meta:'Dentist • 8 Years Exp', price:'₹500'},
-          {name:'Dr. Meera Iyer', meta:'General Physician • 15 Years Exp', price:'₹600'}
-        ].map((d, i)=> (
-          <div className="specialist-row" key={i}>
-            <div className="specialist-info">
-              <div className="specialist-name">{d.name}</div>
-              <div className="specialist-meta">{d.meta}</div>
-            </div>
-
-            <div style={{display:'flex',alignItems:'center',gap:12}}>
-              <div className="price-pill">{d.price}</div>
-              <div className="specialist-actions">
-                <button className="view-btn" onClick={()=>navigate('/booking')}>View Profile</button>
-              </div>
-            </div>
-          </div>
-        ))}
-      </section>
-      {/* Hero Section */}
-      <section className="hero-section">
-        <div className="hero-content">
-          <h1 className="hero-title">Get Full Body Health Checkups</h1>
-          <p className="hero-subtitle">From the comfort of your home.</p>
+    <main className="center" style={{ padding: '20px' }}>
+      <div style={{ maxWidth: '1200px', width: '100%' }}>
+        {/* Header Section */}
+        <section style={{ textAlign: 'center', marginBottom: '40px' }}>
+          <h1 style={{ fontSize: '32px', fontWeight: 'bold', marginBottom: '10px', color: '#1f2937' }}>
+            Book Your Health Checkup Online
+          </h1>
+          <p style={{ fontSize: '16px', color: '#6b7280', marginBottom: '20px' }}>
+            Find and book appointments with qualified doctors
+          </p>
           
-          <div className="offers-banner">
-            {offers.map((offer, idx) => (
-              <div key={idx} className="offer-item">
-                <span className="offer-percent">{offer.percent}</span>
-                <span className="offer-text">{offer.description}</span>
-              </div>
-            ))}
+          {/* Search Bar */}
+          <div style={{ maxWidth: '500px', margin: '0 auto' }}>
+            <input
+              type="text"
+              placeholder="Search doctors by name or specialty..."
+              value={searchTerm}
+              onChange={(e) => setSearchTerm(e.target.value)}
+              style={{
+                width: '100%',
+                padding: '12px 16px',
+                fontSize: '14px',
+                border: '2px solid #e5e7eb',
+                borderRadius: '8px',
+                boxSizing: 'border-box'
+              }}
+            />
           </div>
+        </section>
 
-          <button 
-            className="btn-book btn-large" 
-            onClick={() => navigate('/booking')}
-          >
-            Book Appointment Now
-          </button>
-        </div>
-      </section>
-
-      {/* Features Section */}
-      <section className="features-section">
-        <h2 className="features-title">Why Choose DoctorCare Online?</h2>
-        <div className="features-grid">
-          {features.map((feature, idx) => (
-            <div key={idx} className="feature-card" style={{ '--card-color': feature.color }}>
-              <div className="feature-icon">{feature.icon}</div>
-              <h3 className="feature-title">{feature.title}</h3>
-              <p className="feature-description">{feature.description}</p>
+        {/* Doctors List */}
+        <section style={{ marginBottom: '40px' }}>
+          <h2 style={{ fontSize: '24px', fontWeight: 'bold', marginBottom: '20px', color: '#1f2937' }}>
+            Available Doctors
+          </h2>
+          
+          {filteredDoctors.length === 0 ? (
+            <div style={{ textAlign: 'center', padding: '40px', color: '#6b7280' }}>
+              No doctors found matching your search
             </div>
-          ))}
-        </div>
-      </section>
+          ) : (
+            <div style={{
+              display: 'grid',
+              gridTemplateColumns: 'repeat(auto-fill, minmax(280px, 1fr))',
+              gap: '20px'
+            }}>
+              {filteredDoctors.map((doctor) => (
+                <div key={doctor.id} style={{
+                  background: 'white',
+                  borderRadius: '12px',
+                  overflow: 'hidden',
+                  boxShadow: '0 4px 6px rgba(0, 0, 0, 0.1)',
+                  transition: 'transform 0.3s ease',
+                  cursor: 'pointer'
+                }}
+                onMouseOver={(e) => e.currentTarget.style.transform = 'translateY(-4px)'}
+                onMouseOut={(e) => e.currentTarget.style.transform = 'translateY(0)'}
+                >
+                  <div style={{
+                    height: '200px',
+                    background: '#f3f4f6',
+                    overflow: 'hidden'
+                  }}>
+                    <img src={doctor.image} alt={doctor.name} style={{
+                      width: '100%',
+                      height: '100%',
+                      objectFit: 'cover'
+                    }} />
+                  </div>
+                  
+                  <div style={{ padding: '16px' }}>
+                    <h3 style={{ fontSize: '16px', fontWeight: 'bold', margin: '0 0 8px 0' }}>
+                      {doctor.name}
+                    </h3>
+                    <p style={{ fontSize: '13px', color: '#6b7280', margin: '4px 0' }}>
+                      {doctor.specialty}
+                    </p>
+                    <p style={{ fontSize: '13px', color: '#6b7280', margin: '4px 0' }}>
+                      {doctor.experience}
+                    </p>
+                    
+                    <div style={{ display: 'flex', alignItems: 'center', gap: '8px', margin: '12px 0' }}>
+                      <span style={{ color: '#fbbf24', fontSize: '14px' }}>★</span>
+                      <span style={{ fontSize: '12px', color: '#6b7280' }}>
+                        {doctor.rating} ({doctor.reviews} reviews)
+                      </span>
+                    </div>
+                    
+                    <p style={{ fontSize: '18px', color: '#10b981', fontWeight: 'bold', margin: '12px 0' }}>
+                      ₹{doctor.price}
+                    </p>
+                    
+                    <button
+                      onClick={() => handleDoctorSelect(doctor)}
+                      style={{
+                        width: '100%',
+                        padding: '12px',
+                        background: '#2563eb',
+                        color: 'white',
+                        border: 'none',
+                        borderRadius: '6px',
+                        cursor: 'pointer',
+                        fontWeight: 'bold',
+                        fontSize: '14px'
+                      }}
+                    >
+                      Book Appointment
+                    </button>
+                  </div>
+                </div>
+              ))}
+            </div>
+          )}
+        </section>
 
-      {/* Old Card */}
-      <section className="booking-section">
-        <div className="card home-card">
-          <h3>Full Body Checkup Package</h3>
-          <p className="package-price">Starting at ₹999</p>
-          <button 
-            className="btn-book" 
-            onClick={() => navigate('/booking')}
+        {/* Info Section */}
+        <section style={{
+          background: '#f0fdf4',
+          padding: '30px',
+          borderRadius: '12px',
+          marginBottom: '40px',
+          borderLeft: '4px solid #10b981'
+        }}>
+          <h2 style={{ fontSize: '20px', fontWeight: 'bold', margin: '0 0 15px 0', color: '#166534' }}>
+            How It Works
+          </h2>
+          <div style={{
+            display: 'grid',
+            gridTemplateColumns: 'repeat(auto-fit, minmax(200px, 1fr))',
+            gap: '20px'
+          }}>
+            <div style={{ textAlign: 'center' }}>
+              <div style={{
+                fontSize: '32px',
+                fontWeight: 'bold',
+                color: '#2563eb',
+                marginBottom: '8px'
+              }}>1</div>
+              <p style={{ fontSize: '14px', color: '#166534', margin: 0 }}>Select a Doctor</p>
+            </div>
+            <div style={{ textAlign: 'center' }}>
+              <div style={{
+                fontSize: '32px',
+                fontWeight: 'bold',
+                color: '#2563eb',
+                marginBottom: '8px'
+              }}>2</div>
+              <p style={{ fontSize: '14px', color: '#166534', margin: 0 }}>Choose Date & Time</p>
+            </div>
+            <div style={{ textAlign: 'center' }}>
+              <div style={{
+                fontSize: '32px',
+                fontWeight: 'bold',
+                color: '#2563eb',
+                marginBottom: '8px'
+              }}>3</div>
+              <p style={{ fontSize: '14px', color: '#166534', margin: 0 }}>Fill Patient Details</p>
+            </div>
+            <div style={{ textAlign: 'center' }}>
+              <div style={{
+                fontSize: '32px',
+                fontWeight: 'bold',
+                color: '#2563eb',
+                marginBottom: '8px'
+              }}>4</div>
+              <p style={{ fontSize: '14px', color: '#166534', margin: 0 }}>Make Payment</p>
+            </div>
+          </div>
+        </section>
+
+        {/* CTA Section */}
+        <section style={{
+          background: 'linear-gradient(135deg, #2563eb 0%, #1e40af 100%)',
+          padding: '40px',
+          borderRadius: '12px',
+          textAlign: 'center',
+          color: 'white'
+        }}>
+          <h2 style={{ fontSize: '24px', fontWeight: 'bold', marginBottom: '12px' }}>
+            Ready to Book?
+          </h2>
+          <p style={{ fontSize: '16px', marginBottom: '20px' }}>
+            Schedule your health checkup with our experienced doctors today
+          </p>
+          <button
+            onClick={() => navigate('/diagnostics')}
+            style={{
+              padding: '14px 32px',
+              background: 'white',
+              color: '#2563eb',
+              border: 'none',
+              borderRadius: '6px',
+              cursor: 'pointer',
+              fontWeight: 'bold',
+              fontSize: '16px'
+            }}
           >
-            View Details
+            Browse All Doctors
           </button>
-        </div>
-      </section>
+        </section>
+      </div>
     </main>
   );
 }

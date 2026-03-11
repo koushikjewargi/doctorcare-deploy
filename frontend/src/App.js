@@ -39,18 +39,7 @@ import AddedRecords from './Frontend/Containers/AddedRecords';
 import PatientDetails from './Frontend/Containers/PatientDetails';
 
 // --- DIAGNOSTICS ---
-import Booking from './Frontend/Containers/Booking';
-import Payment from './Frontend/Containers/Payment';
-import HomePage from './Frontend/Containers/HomePage';
-import BookingPage from './Frontend/Containers/BookingPage';
-import PatientDetailsPage from './Frontend/Containers/PatientDetailsPage';
-import PaymentPage from './Frontend/Containers/PaymentPage';
-import SuccessPage from './Frontend/Containers/SuccessPage';
-import FailurePage from './Frontend/Containers/FailurePage';
-import HistoryPage from './Frontend/Containers/HistoryPage';
-import BrandingHeader from './Frontend/Components/BrandingHeader';
-import CustomHeader from './Frontend/Components/CustomHeader';
-import CustomSidebar from './Frontend/Components/CustomSidebar';
+import DiagnosticsRoutes from './Frontend/Containers/Diagnostics/Routes';
 
 // 🔒 PROTECTED ROUTE COMPONENT (The Gatekeeper)
 const ProtectedRoute = ({ children }) => {
@@ -127,19 +116,15 @@ function App() {
           <Route path="/added-records" element={<ProtectedRoute><AddedRecords /></ProtectedRoute>} />
           <Route path="/patient-details" element={<ProtectedRoute><PatientDetails /></ProtectedRoute>} />
 
-          {/* Diagnostics */}
-          <Route path="/booking" element={<BookingPage />} />
-          <Route path="/payment" element={<PaymentPage />} />
-          <Route path="/patient" element={<PatientDetailsPage />} />
-          <Route path="/success" element={<SuccessPage />} />
-          <Route path="/failure" element={<FailurePage />} />
-          <Route path="/history" element={<HistoryPage />} />
-          
-          {/* Alternative Diagnostics Routes */}
-          <Route path="/home" element={<HomePage />} />
-          <Route path="/booking-page" element={<BookingPage />} />
-          <Route path="/patient-page" element={<PatientDetailsPage />} />
-          <Route path="/payment-page" element={<PaymentPage />} />
+          {/* Diagnostics Routes */}
+          <Route path="/diagnostics/*" element={<DiagnosticsRoutes />} />
+          {/* legacy or direct shortcuts for diagnostics pages */}
+          <Route path="/booking" element={<Navigate to="/diagnostics/booking" replace />} />
+          <Route path="/patient-details" element={<Navigate to="/diagnostics/patient-details" replace />} />
+          <Route path="/payment" element={<Navigate to="/diagnostics/payment" replace />} />
+          <Route path="/history" element={<Navigate to="/diagnostics/history" replace />} />
+          <Route path="/success" element={<Navigate to="/diagnostics/success" replace />} />
+          <Route path="/failure" element={<Navigate to="/diagnostics/failure" replace />} />
 
           {/* System Pages */}
           <Route path="/feedback" element={<ProtectedRoute><Feedback /></ProtectedRoute>} />

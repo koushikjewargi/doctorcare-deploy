@@ -4,8 +4,10 @@ const MedicalRecords = () => {
   const [bookings, setBookings] = useState([]);
 
   useEffect(() => {
-    const stored = JSON.parse(localStorage.getItem('bookings') || '[]');
-    setBookings(stored);
+    const general = JSON.parse(localStorage.getItem('bookings') || '[]');
+    const diagnostic = JSON.parse(localStorage.getItem('diagnosticBookings') || '[]');
+    // merge arrays so that diagnostic appointments also appear
+    setBookings([...general, ...diagnostic]);
   }, []);
 
   const records = [
@@ -31,6 +33,9 @@ const MedicalRecords = () => {
       {bookings.length > 0 && (
         <div style={{ marginTop: '40px' }}>
           <h2 style={styles.title}>Booking History</h2>
+          <p style={{ fontSize: '14px', color: '#6b7280', marginBottom: '20px' }}>
+            (including diagnostic appointments)
+          </p>
           <div style={{ display: 'flex', flexDirection: 'column', gap: '15px' }}>
             {bookings.map(b => (
               <div key={b.id} style={styles.recordCard}>

@@ -1,11 +1,10 @@
-import React, { useState, useEffect } from "react";
-import { useNavigate, useLocation } from "react-router-dom";
+import React, { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import { Lock, Loader2, CheckCircle2, Eye, EyeOff } from "lucide-react";
 
 const ResetPassword = () => {
   const navigate = useNavigate();
-  const location = useLocation();
-  const email = location.state?.email;
+  // location was previously used to read email from navigation state; not required now
 
   const [pw, setPw] = useState("");
   const [confirm, setConfirm] = useState("");

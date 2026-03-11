@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { ChevronDown, ChevronUp, Search } from "lucide-react";
+import { ChevronDown, ChevronUp } from "lucide-react";
 
 const faqs = [
   { question: "How do I book an appointment?", answer: "Go to the 'Find Doctors' page, select a doctor, and click 'Book Appointment'. Choose your preferred slot and confirm." },
