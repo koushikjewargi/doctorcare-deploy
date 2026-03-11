@@ -15,7 +15,7 @@ const MedicalRecords = () => {
 
   return (
     <div style={styles.container}>
-      <h2 style={styles.title}>Medical Records</h2>
+      <h2 style={styles.title}>My Details</h2>
       <div style={styles.list}>
         {records.map(rec => (
           <div key={rec.id} style={styles.recordCard}>
@@ -23,7 +23,7 @@ const MedicalRecords = () => {
               <h4 style={styles.date}>{rec.date}</h4>
               <p style={styles.docName}>{rec.doctor} • {rec.type}</p>
             </div>
-            <button style={styles.downloadBtn}>📄 Download PDF</button>
+            <button style={styles.downloadBtn} onClick={() => alert('Download PDF functionality coming soon')}>📄 Download PDF</button>
           </div>
         ))}
       </div>

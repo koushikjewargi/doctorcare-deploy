@@ -13,7 +13,6 @@ export default function PatientDetailsPage() {
     email: ''
   });
   const [errors, setErrors] = useState({});
-  const [useMyDetails, setUseMyDetails] = useState(false);
 
   const handleChange = (e) => {
     const { id, value, type, name } = e.target;
@@ -39,23 +38,6 @@ export default function PatientDetailsPage() {
     return Object.keys(newErrors).length === 0;
   };
 
-  const loadMyDetails = () => {
-    const savedDetails = localStorage.getItem('myPatientDetails');
-    if (savedDetails) {
-      const details = JSON.parse(savedDetails);
-      const [day, month, year] = details.dob ? details.dob.split('-') : ['', '', ''];
-      setFormData({
-        name: details.name || '',
-        day: day || '',
-        month: month || '',
-        year: year || '',
-        gender: details.gender || 'Male',
-        mobileNumber: details.mobileNumber || '',
-        email: details.email || ''
-      });
-      setUseMyDetails(true);
-    }
-  };
 
   const handleContinue = () => {
     if (validateForm()) {
@@ -66,10 +48,6 @@ export default function PatientDetailsPage() {
       };
       localStorage.setItem('patientDetails', JSON.stringify(patientData));
       
-      // If using my details, update the saved details
-      if (useMyDetails) {
-        localStorage.setItem('myPatientDetails', JSON.stringify(patientData));
-      }
       
       navigate('/payment');
     }
@@ -80,16 +58,6 @@ export default function PatientDetailsPage() {
       <div className="patient-form">
         <h2>My Details</h2>
 
-        <div style={{ marginBottom: '20px', textAlign: 'center' }}>
-          <button 
-            className="btn-book" 
-            onClick={loadMyDetails}
-            style={{ background: '#10b981', color: '#fff', border: 'none', padding: '10px 20px', borderRadius: '8px' }}
-          >
-            Use My Details
-          </button>
-          {useMyDetails && <p style={{ marginTop: '10px', color: '#10b981', fontSize: '14px' }}>Using your saved details</p>}
-        </div>
 
         <div className="form-group">
           <label>Name</label>
