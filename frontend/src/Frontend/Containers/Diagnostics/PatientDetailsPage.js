@@ -418,8 +418,8 @@ export default function PatientDetailsPage() {
               style={{
                 padding: '12px 24px',
                 background: 'white',
-                color: '#2563eb',
-                border: '2px solid #2563eb',
+                color: 'var(--accent-green)',
+                border: '2px solid var(--accent-green)',
                 borderRadius: '6px',
                 cursor: 'pointer',
                 fontWeight: 'bold',
@@ -434,7 +434,7 @@ export default function PatientDetailsPage() {
               disabled={isLoading}
               style={{
                 padding: '12px 24px',
-                background: isLoading ? '#9ca3af' : '#2563eb',
+                background: isLoading ? '#9ca3af' : 'var(--accent-green)',
                 color: 'white',
                 border: 'none',
                 borderRadius: '6px',

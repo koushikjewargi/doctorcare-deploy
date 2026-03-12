@@ -187,8 +187,8 @@ export default function PaymentPage() {
           {/* Payment Method Selection */}
           <div style={{ marginBottom: '30px' }}>
             <div style={{
-              background: paymentMethod === 'online' ? '#eff6ff' : 'white',
-              border: paymentMethod === 'online' ? '2px solid #2563eb' : '1px solid #d1d5db',
+              background: paymentMethod === 'online' ? 'rgba(16,185,129,0.06)' : 'white',
+              border: paymentMethod === 'online' ? '2px solid var(--accent-green)' : '1px solid #d1d5db',
               borderRadius: '10px',
               padding: '15px',
               cursor: 'pointer',
@@ -213,8 +213,8 @@ export default function PaymentPage() {
             </div>
 
             <div style={{
-              background: paymentMethod === 'upi' ? '#eff6ff' : 'white',
-              border: paymentMethod === 'upi' ? '2px solid #2563eb' : '1px solid #d1d5db',
+              background: paymentMethod === 'upi' ? 'rgba(16,185,129,0.06)' : 'white',
+              border: paymentMethod === 'upi' ? '2px solid var(--accent-green)' : '1px solid #d1d5db',
               borderRadius: '10px',
               padding: '15px',
               cursor: 'pointer',
@@ -239,8 +239,8 @@ export default function PaymentPage() {
             </div>
 
             <div style={{
-              background: paymentMethod === 'cash' ? '#eff6ff' : 'white',
-              border: paymentMethod === 'cash' ? '2px solid #2563eb' : '1px solid #d1d5db',
+              background: paymentMethod === 'cash' ? 'rgba(16,185,129,0.06)' : 'white',
+              border: paymentMethod === 'cash' ? '2px solid var(--accent-green)' : '1px solid #d1d5db',
               borderRadius: '10px',
               padding: '15px',
               cursor: 'pointer',
@@ -510,8 +510,8 @@ export default function PaymentPage() {
                   flex: 1,
                   padding: '12px 16px',
                   background: 'white',
-                  color: '#2563eb',
-                  border: '2px solid #2563eb',
+                  color: 'var(--accent-green)',
+                  border: '2px solid var(--accent-green)',
                   borderRadius: '6px',
                   cursor: isProcessing ? 'not-allowed' : 'pointer',
                   fontWeight: 'bold',
@@ -531,7 +531,7 @@ export default function PaymentPage() {
                 style={{
                   flex: 1,
                   padding: '12px 16px',
-                  background: isProcessing ? '#9ca3af' : '#2563eb',
+                  background: isProcessing ? '#9ca3af' : 'var(--accent-green)',
                   color: 'white',
                   border: 'none',
                   borderRadius: '6px',
@@ -638,7 +638,7 @@ export default function PaymentPage() {
               fontWeight: 'bold'
             }}>
               <span>Total Amount</span>
-              <span style={{ color: '#2563eb' }}>₹{total}</span>
+              <span style={{ color: 'var(--accent-green)' }}>₹{total}</span>
             </div>
 
             <div style={{

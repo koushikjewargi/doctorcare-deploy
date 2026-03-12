@@ -130,7 +130,7 @@ export default function FailurePage() {
             style={{
               width: '100%',
               padding: '14px 20px',
-              background: '#2563eb',
+              background: 'var(--accent-green)',
               color: 'white',
               border: 'none',
               borderRadius: '8px',
@@ -147,8 +147,8 @@ export default function FailurePage() {
               width: '100%',
               padding: '14px 20px',
               background: 'white',
-              color: '#2563eb',
-              border: '2px solid #2563eb',
+              color: 'var(--accent-green)',
+              border: '2px solid var(--accent-green)',
               borderRadius: '8px',
               cursor: 'pointer',
               fontWeight: 'bold',
@@ -170,7 +170,7 @@ export default function FailurePage() {
             Still facing issues?
           </p>
           <a href="mailto:support@doctorcareonline.com" style={{
-            color: '#2563eb',
+            color: 'var(--accent-green)',
             fontSize: '13px',
             fontWeight: 'bold',
             textDecoration: 'none'

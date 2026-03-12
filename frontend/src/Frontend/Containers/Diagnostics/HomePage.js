@@ -156,7 +156,7 @@ export default function HomePage() {
                       style={{
                         width: '100%',
                         padding: '12px',
-                        background: '#2563eb',
+                        background: 'var(--accent-green)',
                         color: 'white',
                         border: 'none',
                         borderRadius: '6px',
@@ -194,7 +194,7 @@ export default function HomePage() {
               <div style={{
                 fontSize: '32px',
                 fontWeight: 'bold',
-                color: '#2563eb',
+                  color: 'var(--accent-green)',
                 marginBottom: '8px'
               }}>1</div>
               <p style={{ fontSize: '14px', color: '#166534', margin: 0 }}>Select a Doctor</p>
@@ -203,7 +203,7 @@ export default function HomePage() {
               <div style={{
                 fontSize: '32px',
                 fontWeight: 'bold',
-                color: '#2563eb',
+                  color: 'var(--accent-green)',
                 marginBottom: '8px'
               }}>2</div>
               <p style={{ fontSize: '14px', color: '#166534', margin: 0 }}>Choose Date & Time</p>
@@ -212,7 +212,7 @@ export default function HomePage() {
               <div style={{
                 fontSize: '32px',
                 fontWeight: 'bold',
-                color: '#2563eb',
+                  color: 'var(--accent-green)',
                 marginBottom: '8px'
               }}>3</div>
               <p style={{ fontSize: '14px', color: '#166534', margin: 0 }}>Fill Patient Details</p>
@@ -221,7 +221,7 @@ export default function HomePage() {
               <div style={{
                 fontSize: '32px',
                 fontWeight: 'bold',
-                color: '#2563eb',
+                  color: 'var(--accent-green)',
                 marginBottom: '8px'
               }}>4</div>
               <p style={{ fontSize: '14px', color: '#166534', margin: 0 }}>Make Payment</p>
@@ -231,7 +231,7 @@ export default function HomePage() {
 
         {/* CTA Section */}
         <section style={{
-          background: 'linear-gradient(135deg, #2563eb 0%, #1e40af 100%)',
+          background: 'linear-gradient(135deg, var(--accent-green) 0%, #065f46 100%)',
           padding: '40px',
           borderRadius: '12px',
           textAlign: 'center',
@@ -248,7 +248,7 @@ export default function HomePage() {
             style={{
               padding: '14px 32px',
               background: 'white',
-              color: '#2563eb',
+              color: 'var(--accent-green)',
               border: 'none',
               borderRadius: '6px',
               cursor: 'pointer',

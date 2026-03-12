@@ -81,9 +81,9 @@ export default function HistoryPage() {
               onClick={() => setFilter(status)}
               style={{
                 padding: '8px 16px',
-                background: filter === status ? '#2563eb' : 'white',
+                background: filter === status ? 'var(--accent-green)' : 'white',
                 color: filter === status ? 'white' : '#374151',
-                border: filter === status ? '2px solid #2563eb' : '1px solid #d1d5db',
+                border: filter === status ? '2px solid var(--accent-green)' : '1px solid #d1d5db',
                 borderRadius: '6px',
                 cursor: 'pointer',
                 fontWeight: 'bold',
@@ -116,7 +116,7 @@ export default function HistoryPage() {
                 style={{
                   marginTop: '20px',
                   padding: '10px 20px',
-                  background: '#2563eb',
+                  background: 'var(--accent-green)',
                   color: 'white',
                   border: 'none',
                   borderRadius: '6px',
@@ -187,7 +187,7 @@ export default function HistoryPage() {
                     }}>
                       <div>
                         <p style={{ fontSize: '12px', color: '#6b7280', margin: '0 0 4px 0' }}>Amount</p>
-                        <p style={{ fontSize: '16px', fontWeight: 'bold', color: '#2563eb', margin: 0 }}>₹{booking.amount}</p>
+                        <p style={{ fontSize: '16px', fontWeight: 'bold', color: 'var(--accent-green)', margin: 0 }}>₹{booking.amount}</p>
                       </div>
                       <div>
                         <p style={{ fontSize: '12px', color: '#6b7280', margin: '0 0 4px 0' }}>Payment</p>
@@ -238,8 +238,8 @@ export default function HistoryPage() {
                             style={{
                               padding: '8px 12px',
                               background: 'white',
-                              color: '#2563eb',
-                              border: '1px solid #2563eb',
+                                color: 'var(--accent-green)',
+                                border: '1px solid var(--accent-green)',
                               borderRadius: '6px',
                               cursor: 'pointer',
                               fontWeight: 'bold',
@@ -287,7 +287,7 @@ export default function HistoryPage() {
                           onClick={() => navigate('/diagnostics')}
                           style={{
                             padding: '8px 12px',
-                            background: '#2563eb',
+                              background: 'var(--accent-green)',
                             color: 'white',
                             border: 'none',
                             borderRadius: '6px',
@@ -314,8 +314,8 @@ export default function HistoryPage() {
             style={{
               padding: '12px 30px',
               background: 'white',
-              color: '#2563eb',
-              border: '2px solid #2563eb',
+              color: 'var(--accent-green)',
+              border: '2px solid var(--accent-green)',
               borderRadius: '6px',
               cursor: 'pointer',
               fontWeight: 'bold',

@@ -178,7 +178,7 @@ export default function BookingPage() {
                     style={{
                       width: '100%',
                       padding: '10px',
-                      background: '#2563eb',
+                      background: 'var(--accent-green)',
                       color: 'white',
                       border: 'none',
                       borderRadius: '6px',
@@ -213,7 +213,7 @@ export default function BookingPage() {
                 <div style={{
                   fontSize: '32px',
                   fontWeight: 'bold',
-                  color: '#2563eb',
+                  color: 'var(--accent-green)',
                   marginBottom: '8px'
                 }}>1</div>
                 <p style={{ fontSize: '14px', color: '#166534', margin: 0 }}>Select a Doctor</p>
@@ -222,7 +222,7 @@ export default function BookingPage() {
                 <div style={{
                   fontSize: '32px',
                   fontWeight: 'bold',
-                  color: '#2563eb',
+                  color: 'var(--accent-green)',
                   marginBottom: '8px'
                 }}>2</div>
                 <p style={{ fontSize: '14px', color: '#166534', margin: 0 }}>Choose Date & Time</p>
@@ -231,7 +231,7 @@ export default function BookingPage() {
                 <div style={{
                   fontSize: '32px',
                   fontWeight: 'bold',
-                  color: '#2563eb',
+                  color: 'var(--accent-green)',
                   marginBottom: '8px'
                 }}>3</div>
                 <p style={{ fontSize: '14px', color: '#166534', margin: 0 }}>Fill Patient Details</p>
@@ -240,7 +240,7 @@ export default function BookingPage() {
                 <div style={{
                   fontSize: '32px',
                   fontWeight: 'bold',
-                  color: '#2563eb',
+                  color: 'var(--accent-green)',
                   marginBottom: '8px'
                 }}>4</div>
                 <p style={{ fontSize: '14px', color: '#166534', margin: 0 }}>Make Payment</p>
@@ -250,7 +250,7 @@ export default function BookingPage() {
 
           {/* CTA */}
           <section style={{
-            background: 'linear-gradient(135deg, #2563eb 0%, #1e40af 100%)',
+            background: 'linear-gradient(135deg, var(--accent-green) 0%, #065f46 100%)',
             padding: '40px',
             borderRadius: '12px',
             textAlign: 'center',
@@ -268,7 +268,7 @@ export default function BookingPage() {
               style={{
                 padding: '14px 32px',
                 background: 'white',
-                color: '#2563eb',
+                color: 'var(--accent-green)',
                 border: 'none',
                 borderRadius: '6px',
                 cursor: 'pointer',
@@ -341,8 +341,8 @@ export default function BookingPage() {
               style={{
                 padding: '8px 16px',
                 background: 'white',
-                color: '#2563eb',
-                border: '2px solid #2563eb',
+                color: 'var(--accent-green)',
+                border: '2px solid var(--accent-green)',
                 borderRadius: '6px',
                 cursor: 'pointer',
                 fontWeight: 'bold',
@@ -421,7 +421,7 @@ export default function BookingPage() {
                   style={{
                     padding: '12px',
                     border: '1px solid #e5e7eb',
-                    background: day === selectedDate.getDate() && selectedDate.getMonth() === new Date().getMonth() ? '#2563eb' : 'white',
+                    background: day === selectedDate.getDate() && selectedDate.getMonth() === new Date().getMonth() ? 'var(--accent-green)' : 'white',
                     color: day === selectedDate.getDate() && selectedDate.getMonth() === new Date().getMonth() ? 'white' : '#374151',
                     borderRadius: '6px',
                     cursor: day ? 'pointer' : 'default',
@@ -455,9 +455,9 @@ export default function BookingPage() {
                   onClick={() => setSelectedTime(slot.time)}
                   style={{
                     padding: '15px',
-                    border: selectedTime === slot.time ? '2px solid #2563eb' : '1px solid #e5e7eb',
-                    background: selectedTime === slot.time ? '#eff6ff' : 'white',
-                    color: selectedTime === slot.time ? '#2563eb' : '#374151',
+                    border: selectedTime === slot.time ? '2px solid var(--accent-green)' : '1px solid #e5e7eb',
+                    background: selectedTime === slot.time ? 'rgba(16,185,129,0.08)' : 'white',
+                    color: selectedTime === slot.time ? 'var(--accent-green)' : '#374151',
                     borderRadius: '8px',
                     cursor: 'pointer',
                     fontWeight: 'bold',
@@ -510,8 +510,8 @@ export default function BookingPage() {
             style={{
               padding: '12px 24px',
               background: 'white',
-              color: '#2563eb',
-              border: '2px solid #2563eb',
+              color: 'var(--accent-green)',
+              border: '2px solid var(--accent-green)',
               borderRadius: '6px',
               cursor: 'pointer',
               fontWeight: 'bold',
@@ -524,7 +524,7 @@ export default function BookingPage() {
             onClick={handleConfirm}
             style={{
               padding: '12px 24px',
-              background: '#2563eb',
+              background: 'var(--accent-green)',
               color: 'white',
               border: 'none',
               borderRadius: '6px',
