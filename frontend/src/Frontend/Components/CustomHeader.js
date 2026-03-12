@@ -8,11 +8,7 @@ export default function CustomHeader() {
 
   const userName = JSON.parse(localStorage.getItem('patientDetails') || '{}').name || 'Guest';
 
-  const handleLogout = () => {
-    localStorage.clear();
-    navigate('/');
-    setMenuOpen(false);
-  };
+  
 
   const handleSearch = (e) => {
     e.preventDefault();

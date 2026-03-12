@@ -1,7 +1,7 @@
 import React from "react";
 import { useNavigate } from "react-router-dom";
 import { 
-  Search, Calendar, FileText, Activity, 
+  Calendar, FileText, Activity, 
   Heart, ChevronRight, Stethoscope, Microscope, 
   Clock, Bell, User
 } from "lucide-react";

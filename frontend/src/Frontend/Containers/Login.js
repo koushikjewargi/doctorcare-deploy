@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-import { Eye, EyeOff, ShieldCheck, Loader2 } from "lucide-react";
+import { ShieldCheck } from "lucide-react";
 
 const Login = () => {
   const navigate = useNavigate();
