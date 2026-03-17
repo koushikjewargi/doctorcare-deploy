@@ -70,6 +70,7 @@ const Layout = ({ children }) => {
     '/reset-password'
   ]; 
   
+  
   const showHeaderFooter = !hideLayout.includes(location.pathname);
 
   return (
