@@ -14,17 +14,26 @@ public class UserController {
     @Autowired
     private UserService userService; 
 
-    // Registration API
     @PostMapping("/register")
     public ResponseEntity<?> registerUser(@RequestBody User user) {
-        
-        // 1. Check if the email is already in the database
         if (userService.emailExists(user.getEmail())) {
             return ResponseEntity.badRequest().body("Error: Email is already registered!");
         }
-
-        // 2. If it is a new email, save the user
         userService.saveUser(user);
-        return ResponseEntity.ok("Success: User profile and security question saved to MongoDB!");
+        return ResponseEntity.ok("Success: User profile and security question saved!");
+    }
+
+    // --- NEW LOGIN API ---
+    @PostMapping("/login")
+    public ResponseEntity<?> loginUser(@RequestBody User loginData) {
+        
+        // Pass the email and password from Postman/React to our Service
+        User loggedInUser = userService.loginUser(loginData.getEmail(), loginData.getPassword());
+        
+        if (loggedInUser != null) {
+            return ResponseEntity.ok("Success: You are logged in!");
+        } else {
+            return ResponseEntity.status(401).body("Error: Invalid email or password");
+        }
     }
 }

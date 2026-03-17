@@ -35,7 +35,10 @@ const Login = () => {
     return email.toLowerCase().endsWith("@gmail.com") && email.length > 10;
   };
 
-  const handleLogin = (e) => {
+  // ==========================================
+  // NEW: SPRING BOOT LOGIN API CALL
+  // ==========================================
+  const handleLogin = async (e) => {
     e.preventDefault();
     setError("");
 
@@ -44,48 +47,55 @@ const Login = () => {
       return;
     }
 
-    if (!isValidGmail(email)) {
-      setError("Please enter a valid @gmail.com address.");
-      return;
-    }
-
     setIsLoading(true);
-    
     const cleanEmail = email.toLowerCase();
 
-    setTimeout(() => {
-      setIsLoading(false);
-      
-      // 1. RETRIEVE USER FROM STORAGE
-      const storedUser = JSON.parse(localStorage.getItem(cleanEmail));
+    try {
+      const response = await fetch("http://localhost:8085/api/users/login", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ email: cleanEmail, password: password })
+      });
 
-      // 2. CHECK CREDENTIALS
-      if (storedUser && storedUser.password === password) {
-          
-          // 3. DETECT ROLE & NAVIGATE
-          let role = "patient";
-          let targetPath = "/menu";
+      if (response.ok) {
+        // Backend said 200 OK! Passwords match!
+        
+        // Auto-detect role for routing (we will upgrade this to JWT later)
+        let role = "Patient";
+        let targetPath = "/menu";
 
-          if (cleanEmail.includes("admin")) {
-              role = "admin";
-              targetPath = "/admin-dashboard";
-          } else if (cleanEmail.includes("doctor")) {
-              role = "doctor";
-              targetPath = "/doctor-dashboard";
-          }
+        if (cleanEmail.includes("admin")) {
+            role = "Admin";
+            targetPath = "/admin-dashboard";
+        } else if (cleanEmail.includes("doctor")) {
+            role = "Doctor";
+            targetPath = "/doctor-dashboard";
+        }
 
-          localStorage.setItem("role", role);
-          localStorage.setItem("userEmail", cleanEmail);
-          localStorage.setItem("userName", storedUser.name);
-          
-          navigate(targetPath);
+        // Save session data so React knows you are logged in
+        localStorage.setItem("role", role);
+        localStorage.setItem("userEmail", cleanEmail);
+        
+        setIsLoading(false);
+        navigate(targetPath);
+
       } else {
-          setError("Invalid email or password.");
+        // Backend sent a 401 Error (Wrong password or email)
+        const errorText = await response.text();
+        setError(errorText || "Invalid email or password.");
+        setIsLoading(false);
       }
-    }, 1500);
+    } catch (err) {
+      console.error("Login Error:", err);
+      setError("Cannot connect to server. Is Spring Boot running?");
+      setIsLoading(false);
+    }
   };
 
-  const handleRegister = (e) => {
+  // ==========================================
+  // NEW: SPRING BOOT REGISTER API CALL
+  // ==========================================
+  const handleRegister = async (e) => {
     e.preventDefault();
     setError("");
 
@@ -110,39 +120,47 @@ const Login = () => {
     }
 
     setIsLoading(true);
-    
     const cleanEmail = email.toLowerCase();
 
-    setTimeout(() => {
-      setIsLoading(false);
-      
-      if (localStorage.getItem(cleanEmail)) {
-          setError("User already exists!");
-          return;
+    // Auto-detect role for registration
+    let role = "Patient";
+    if (cleanEmail.includes("admin")) role = "Admin";
+    else if (cleanEmail.includes("doctor")) role = "Doctor";
+
+    const userData = {
+      name: name,
+      email: cleanEmail,
+      password: password,
+      role: role,
+      securityQuestion: securityQuestion,
+      securityAnswer: securityAnswer.trim().toLowerCase()
+    };
+
+    try {
+      const response = await fetch("http://localhost:8085/api/users/register", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(userData)
+      });
+
+      if (response.ok) {
+        alert(`Account Created Successfully as ${role.toUpperCase()}! You can now log in.`);
+        
+        // Clear form and switch back to login tab
+        setActiveTab("login"); 
+        setPassword("");
+        setConfirmPassword("");
+        setIsLoading(false);
+      } else {
+        const errorText = await response.text();
+        setError(errorText || "Registration failed. Email might already exist.");
+        setIsLoading(false);
       }
-
-      // AUTO-DETECT ROLE FOR REGISTRATION TOO
-      let role = "patient";
-      if (cleanEmail.includes("admin")) role = "admin";
-      else if (cleanEmail.includes("doctor")) role = "doctor";
-
-      const userData = {
-        name,
-        email: cleanEmail,
-        password,
-        securityQuestion,
-        securityAnswer: securityAnswer.trim().toLowerCase(),
-        role: role
-      };
-      
-      localStorage.setItem(cleanEmail, JSON.stringify(userData));
-      localStorage.setItem("role", role); // Auto-login session
-
-      alert(`Account Created Successfully as ${role.toUpperCase()}!`);
-      setActiveTab("login"); 
-      setPassword("");
-      setConfirmPassword("");
-    }, 1500);
+    } catch (err) {
+      console.error("Register Error:", err);
+      setError("Cannot connect to server. Is Spring Boot running?");
+      setIsLoading(false);
+    }
   };
 
   return (
@@ -281,6 +299,7 @@ const Login = () => {
   );
 };
 
+// I kept your exact styles down here so nothing breaks visually!
 const styles = {
   pageContainer: { minHeight: 'calc(100vh - 70px)', display: 'flex', flexDirection: 'column', backgroundColor: '#fff', fontFamily: "'Inter', sans-serif", justifyContent: 'center', alignItems: 'center', padding: '20px' },
   contentWrapper: { flex: 1, display: 'flex', alignItems: 'center', justifyContent: 'center', width: '100%' },
