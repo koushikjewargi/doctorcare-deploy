@@ -1,1 +1,0 @@
-function toggleSidebar(){const s=document.querySelector('.sidebar'); if(s) s.style.display=s.style.display==='block'?'none':'block';}
