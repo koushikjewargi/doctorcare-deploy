@@ -31,6 +31,13 @@ const AppSidebar = ({ isOpen, onClose }) => {
     navigate("/login");
   };
 
+  // Function to get the active path considering redirects
+  const getActivePath = (pathname) => {
+    if (pathname.startsWith('/diagnostics')) return '/booking';
+    if (pathname === '/added-records') return '/records';
+    return pathname;
+  };
+
   return (
     <>
       <div 
@@ -69,7 +76,7 @@ const AppSidebar = ({ isOpen, onClose }) => {
 
         <div style={styles.menuList}>
           {menuItems.map((item) => {
-            const isActive = location.pathname === item.path;
+            const isActive = getActivePath(location.pathname) === item.path;
             return (
               <div 
                 key={item.name}
