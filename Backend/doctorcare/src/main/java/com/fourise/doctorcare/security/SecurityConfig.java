@@ -24,17 +24,11 @@ public class SecurityConfig {
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http
-<<<<<<< HEAD
             // 1. Turn on the CORS bouncer (He will look at the Bean below for the rules)
-=======
->>>>>>> d1c75fff9ab344d6c6e983a8b80a1ba9f3478311
             .cors(Customizer.withDefaults()) 
             .csrf(csrf -> csrf.disable()) 
             .authorizeHttpRequests(auth -> auth
-<<<<<<< HEAD
                 // 3. Allow "OPTIONS" requests (Browsers send these automatically to check CORS rules)
-=======
->>>>>>> d1c75fff9ab344d6c6e983a8b80a1ba9f3478311
                 .requestMatchers(HttpMethod.OPTIONS, "/**").permitAll() 
                 // Keep the API open while authentication is not fully implemented.
                 .requestMatchers("/api/**").permitAll()
