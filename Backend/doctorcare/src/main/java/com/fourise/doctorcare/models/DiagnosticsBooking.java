@@ -1,43 +1,33 @@
 package com.fourise.doctorcare.models;
 
-import jakarta.persistence.*;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
+import org.springframework.data.annotation.Id;
+import org.springframework.data.mongodb.core.mapping.Document;
 
-@Entity
-@Table(name = "diagnostics_booking")
+@Document(collection = "diagnostics_booking")
 public class DiagnosticsBooking {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    private String id;
 
-    @Column(nullable = false)
-    private Long diagnosticsId;
+    private String diagnosticsId;
 
-    @Column(nullable = false)
-    private Long userId;
+    private String userId;
 
-    @Column(nullable = false)
     private LocalDate appointmentDate;
 
-    @Column(nullable = false)
     private LocalTime appointmentTime;
 
-    @Column(length = 500)
     private String location;
 
-    @Enumerated(EnumType.STRING)
-    @Column(nullable = false)
     private BookingStatus bookingStatus;
 
-    @Column(nullable = false)
     private LocalDateTime createdAt;
 
     private LocalDateTime updatedAt;
 
-    @Column(length = 500)
     private String patientNotes;
 
     // Constructors
@@ -46,7 +36,7 @@ public class DiagnosticsBooking {
         this.bookingStatus = BookingStatus.SCHEDULED;
     }
 
-    public DiagnosticsBooking(Long diagnosticsId, Long userId, LocalDate appointmentDate, LocalTime appointmentTime) {
+    public DiagnosticsBooking(String diagnosticsId, String userId, LocalDate appointmentDate, LocalTime appointmentTime) {
         this();
         this.diagnosticsId = diagnosticsId;
         this.userId = userId;
@@ -55,27 +45,27 @@ public class DiagnosticsBooking {
     }
 
     // Getters and Setters
-    public Long getId() {
+    public String getId() {
         return id;
     }
 
-    public void setId(Long id) {
+    public void setId(String id) {
         this.id = id;
     }
 
-    public Long getDiagnosticsId() {
+    public String getDiagnosticsId() {
         return diagnosticsId;
     }
 
-    public void setDiagnosticsId(Long diagnosticsId) {
+    public void setDiagnosticsId(String diagnosticsId) {
         this.diagnosticsId = diagnosticsId;
     }
 
-    public Long getUserId() {
+    public String getUserId() {
         return userId;
     }
 
-    public void setUserId(Long userId) {
+    public void setUserId(String userId) {
         this.userId = userId;
     }
 

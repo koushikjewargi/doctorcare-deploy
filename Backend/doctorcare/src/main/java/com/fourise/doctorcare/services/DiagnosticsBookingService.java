@@ -19,33 +19,33 @@ public class DiagnosticsBookingService {
     private DiagnosticsBookingRepository diagnosticsBookingRepository;
 
     // Create a booking
-    public DiagnosticsBooking createBooking(Long diagnosticsId, Long userId, LocalDate appointmentDate, LocalTime appointmentTime) {
+    public DiagnosticsBooking createBooking(String diagnosticsId, String userId, LocalDate appointmentDate, LocalTime appointmentTime) {
         DiagnosticsBooking booking = new DiagnosticsBooking(diagnosticsId, userId, appointmentDate, appointmentTime);
         return diagnosticsBookingRepository.save(booking);
     }
 
     // Get all bookings for a user
-    public List<DiagnosticsBooking> getUserBookings(Long userId) {
+    public List<DiagnosticsBooking> getUserBookings(String userId) {
         return diagnosticsBookingRepository.findByUserIdOrderByAppointmentDateDesc(userId);
     }
 
     // Get booking by ID
-    public Optional<DiagnosticsBooking> getBookingById(Long id) {
+    public Optional<DiagnosticsBooking> getBookingById(String id) {
         return diagnosticsBookingRepository.findById(id);
     }
 
     // Get booking by ID and userId for security
-    public Optional<DiagnosticsBooking> getBookingByIdAndUserId(Long id, Long userId) {
+    public Optional<DiagnosticsBooking> getBookingByIdAndUserId(String id, String userId) {
         return diagnosticsBookingRepository.findByIdAndUserId(id, userId);
     }
 
     // Get all bookings for a specific diagnostic
-    public List<DiagnosticsBooking> getDiagnosticsBookings(Long diagnosticsId) {
+    public List<DiagnosticsBooking> getDiagnosticsBookings(String diagnosticsId) {
         return diagnosticsBookingRepository.findByDiagnosticsId(diagnosticsId);
     }
 
     // Get user's bookings with specific status
-    public List<DiagnosticsBooking> getUserBookingsByStatus(Long userId, BookingStatus status) {
+    public List<DiagnosticsBooking> getUserBookingsByStatus(String userId, BookingStatus status) {
         return diagnosticsBookingRepository.findByUserIdAndBookingStatus(userId, status);
     }
 
@@ -55,7 +55,7 @@ public class DiagnosticsBookingService {
     }
 
     // Update booking
-    public DiagnosticsBooking updateBooking(Long id, LocalDate appointmentDate, LocalTime appointmentTime, String location) {
+    public DiagnosticsBooking updateBooking(String id, LocalDate appointmentDate, LocalTime appointmentTime, String location) {
         Optional<DiagnosticsBooking> booking = diagnosticsBookingRepository.findById(id);
         if (booking.isPresent()) {
             DiagnosticsBooking diag = booking.get();
@@ -69,7 +69,7 @@ public class DiagnosticsBookingService {
     }
 
     // Update booking status
-    public DiagnosticsBooking updateBookingStatus(Long id, BookingStatus status) {
+    public DiagnosticsBooking updateBookingStatus(String id, BookingStatus status) {
         Optional<DiagnosticsBooking> booking = diagnosticsBookingRepository.findById(id);
         if (booking.isPresent()) {
             DiagnosticsBooking diag = booking.get();
@@ -81,7 +81,7 @@ public class DiagnosticsBookingService {
     }
 
     // Add patient notes to booking
-    public DiagnosticsBooking addPatientNotes(Long id, String notes) {
+    public DiagnosticsBooking addPatientNotes(String id, String notes) {
         Optional<DiagnosticsBooking> booking = diagnosticsBookingRepository.findById(id);
         if (booking.isPresent()) {
             DiagnosticsBooking diag = booking.get();
@@ -93,7 +93,7 @@ public class DiagnosticsBookingService {
     }
 
     // Cancel booking
-    public DiagnosticsBooking cancelBooking(Long id) {
+    public DiagnosticsBooking cancelBooking(String id) {
         Optional<DiagnosticsBooking> booking = diagnosticsBookingRepository.findById(id);
         if (booking.isPresent()) {
             DiagnosticsBooking diag = booking.get();
@@ -105,7 +105,7 @@ public class DiagnosticsBookingService {
     }
 
     // Reschedule booking
-    public DiagnosticsBooking rescheduleBooking(Long id, LocalDate newDate, LocalTime newTime) {
+    public DiagnosticsBooking rescheduleBooking(String id, LocalDate newDate, LocalTime newTime) {
         Optional<DiagnosticsBooking> booking = diagnosticsBookingRepository.findById(id);
         if (booking.isPresent()) {
             DiagnosticsBooking diag = booking.get();
@@ -119,7 +119,7 @@ public class DiagnosticsBookingService {
     }
 
     // Get upcoming bookings for user
-    public List<DiagnosticsBooking> getUpcomingBookings(Long userId) {
+    public List<DiagnosticsBooking> getUpcomingBookings(String userId) {
         List<DiagnosticsBooking> bookings = diagnosticsBookingRepository.findByUserIdOrderByAppointmentDateDesc(userId);
         LocalDate today = LocalDate.now();
         bookings.removeIf(booking -> booking.getAppointmentDate().isBefore(today));
@@ -127,7 +127,7 @@ public class DiagnosticsBookingService {
     }
 
     // Delete booking
-    public boolean deleteBooking(Long id) {
+    public boolean deleteBooking(String id) {
         try {
             diagnosticsBookingRepository.deleteById(id);
             return true;
@@ -137,12 +137,12 @@ public class DiagnosticsBookingService {
     }
 
     // Count total bookings for user
-    public long getUserBookingsCount(Long userId) {
+    public long getUserBookingsCount(String userId) {
         return diagnosticsBookingRepository.countByUserId(userId);
     }
 
     // Count total bookings for a diagnostic
-    public long getDiagnosticsBookingsCount(Long diagnosticsId) {
+    public long getDiagnosticsBookingsCount(String diagnosticsId) {
         return diagnosticsBookingRepository.countByDiagnosticsId(diagnosticsId);
     }
 }

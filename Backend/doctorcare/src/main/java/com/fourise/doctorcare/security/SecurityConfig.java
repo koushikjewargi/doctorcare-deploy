@@ -1,8 +1,12 @@
 package com.fourise.doctorcare.security;
 
+import java.util.List;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpMethod;
+import org.springframework.web.cors.CorsConfiguration;
+import org.springframework.web.cors.CorsConfigurationSource;
+import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 import org.springframework.security.config.Customizer;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
@@ -20,21 +24,21 @@ public class SecurityConfig {
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http
+<<<<<<< HEAD
             // 1. Turn on the CORS bouncer (He will look at the Bean below for the rules)
+=======
+>>>>>>> d1c75fff9ab344d6c6e983a8b80a1ba9f3478311
             .cors(Customizer.withDefaults()) 
-            
-            // 2. Disable CSRF for API testing
             .csrf(csrf -> csrf.disable()) 
-            
             .authorizeHttpRequests(auth -> auth
+<<<<<<< HEAD
                 // 3. Allow "OPTIONS" requests (Browsers send these automatically to check CORS rules)
+=======
+>>>>>>> d1c75fff9ab344d6c6e983a8b80a1ba9f3478311
                 .requestMatchers(HttpMethod.OPTIONS, "/**").permitAll() 
-                
-                // 4. Keep the front door completely open for Auth
-                .requestMatchers("/api/users/register", "/api/users/login").permitAll() 
-                
-                // 5. Everything else remains locked
-                .anyRequest().authenticated() 
+                // Keep the API open while authentication is not fully implemented.
+                .requestMatchers("/api/**").permitAll()
+                .anyRequest().permitAll()
             );
         
         return http.build();

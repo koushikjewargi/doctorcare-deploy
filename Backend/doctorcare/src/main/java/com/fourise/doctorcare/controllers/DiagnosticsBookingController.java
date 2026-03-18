@@ -25,8 +25,8 @@ public class DiagnosticsBookingController {
     // Create a booking
     @PostMapping("/create")
     public ResponseEntity<?> createBooking(
-            @RequestParam Long diagnosticsId,
-            @RequestParam Long userId,
+            @RequestParam String diagnosticsId,
+            @RequestParam String userId,
             @RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate appointmentDate,
             @RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.TIME) LocalTime appointmentTime,
             @RequestParam(required = false) String location) {
@@ -43,7 +43,7 @@ public class DiagnosticsBookingController {
 
     // Get all bookings for a user
     @GetMapping("/user/{userId}")
-    public ResponseEntity<?> getUserBookings(@PathVariable Long userId) {
+    public ResponseEntity<?> getUserBookings(@PathVariable String userId) {
         try {
             List<DiagnosticsBooking> bookings = diagnosticsBookingService.getUserBookings(userId);
             return ResponseEntity.ok(bookings);
@@ -54,7 +54,7 @@ public class DiagnosticsBookingController {
 
     // Get booking by ID
     @GetMapping("/{id}")
-    public ResponseEntity<?> getBookingById(@PathVariable Long id) {
+    public ResponseEntity<?> getBookingById(@PathVariable String id) {
         try {
             Optional<DiagnosticsBooking> booking = diagnosticsBookingService.getBookingById(id);
             if (booking.isPresent()) {
@@ -69,7 +69,7 @@ public class DiagnosticsBookingController {
 
     // Get booking by ID and userId
     @GetMapping("/{id}/user/{userId}")
-    public ResponseEntity<?> getBookingByIdAndUserId(@PathVariable Long id, @PathVariable Long userId) {
+    public ResponseEntity<?> getBookingByIdAndUserId(@PathVariable String id, @PathVariable String userId) {
         try {
             Optional<DiagnosticsBooking> booking = diagnosticsBookingService.getBookingByIdAndUserId(id, userId);
             if (booking.isPresent()) {
@@ -84,7 +84,7 @@ public class DiagnosticsBookingController {
 
     // Get all bookings for a diagnostic
     @GetMapping("/diagnostic/{diagnosticsId}")
-    public ResponseEntity<?> getDiagnosticsBookings(@PathVariable Long diagnosticsId) {
+    public ResponseEntity<?> getDiagnosticsBookings(@PathVariable String diagnosticsId) {
         try {
             List<DiagnosticsBooking> bookings = diagnosticsBookingService.getDiagnosticsBookings(diagnosticsId);
             return ResponseEntity.ok(bookings);
@@ -95,7 +95,7 @@ public class DiagnosticsBookingController {
 
     // Get user bookings by status
     @GetMapping("/user/{userId}/status/{status}")
-    public ResponseEntity<?> getUserBookingsByStatus(@PathVariable Long userId, @PathVariable BookingStatus status) {
+    public ResponseEntity<?> getUserBookingsByStatus(@PathVariable String userId, @PathVariable BookingStatus status) {
         try {
             List<DiagnosticsBooking> bookings = diagnosticsBookingService.getUserBookingsByStatus(userId, status);
             return ResponseEntity.ok(bookings);
@@ -118,7 +118,7 @@ public class DiagnosticsBookingController {
     // Update booking
     @PutMapping("/{id}")
     public ResponseEntity<?> updateBooking(
-            @PathVariable Long id,
+            @PathVariable String id,
             @RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate appointmentDate,
             @RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.TIME) LocalTime appointmentTime,
             @RequestParam(required = false) String location) {
@@ -136,7 +136,7 @@ public class DiagnosticsBookingController {
 
     // Update booking status
     @PutMapping("/{id}/status/{status}")
-    public ResponseEntity<?> updateBookingStatus(@PathVariable Long id, @PathVariable BookingStatus status) {
+    public ResponseEntity<?> updateBookingStatus(@PathVariable String id, @PathVariable BookingStatus status) {
         try {
             DiagnosticsBooking booking = diagnosticsBookingService.updateBookingStatus(id, status);
             if (booking != null) {
@@ -151,7 +151,7 @@ public class DiagnosticsBookingController {
 
     // Add patient notes
     @PutMapping("/{id}/notes")
-    public ResponseEntity<?> addPatientNotes(@PathVariable Long id, @RequestBody String notes) {
+    public ResponseEntity<?> addPatientNotes(@PathVariable String id, @RequestBody String notes) {
         try {
             DiagnosticsBooking booking = diagnosticsBookingService.addPatientNotes(id, notes);
             if (booking != null) {
@@ -166,7 +166,7 @@ public class DiagnosticsBookingController {
 
     // Cancel booking
     @PutMapping("/{id}/cancel")
-    public ResponseEntity<?> cancelBooking(@PathVariable Long id) {
+    public ResponseEntity<?> cancelBooking(@PathVariable String id) {
         try {
             DiagnosticsBooking booking = diagnosticsBookingService.cancelBooking(id);
             if (booking != null) {
@@ -182,7 +182,7 @@ public class DiagnosticsBookingController {
     // Reschedule booking
     @PutMapping("/{id}/reschedule")
     public ResponseEntity<?> rescheduleBooking(
-            @PathVariable Long id,
+            @PathVariable String id,
             @RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate newDate,
             @RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.TIME) LocalTime newTime) {
         try {
@@ -199,7 +199,7 @@ public class DiagnosticsBookingController {
 
     // Get upcoming bookings for user
     @GetMapping("/user/{userId}/upcoming")
-    public ResponseEntity<?> getUpcomingBookings(@PathVariable Long userId) {
+    public ResponseEntity<?> getUpcomingBookings(@PathVariable String userId) {
         try {
             List<DiagnosticsBooking> bookings = diagnosticsBookingService.getUpcomingBookings(userId);
             return ResponseEntity.ok(bookings);
@@ -210,7 +210,7 @@ public class DiagnosticsBookingController {
 
     // Delete booking
     @DeleteMapping("/{id}")
-    public ResponseEntity<?> deleteBooking(@PathVariable Long id) {
+    public ResponseEntity<?> deleteBooking(@PathVariable String id) {
         try {
             boolean deleted = diagnosticsBookingService.deleteBooking(id);
             if (deleted) {
@@ -225,7 +225,7 @@ public class DiagnosticsBookingController {
 
     // Get count of bookings for user
     @GetMapping("/user/{userId}/count")
-    public ResponseEntity<?> getUserBookingsCount(@PathVariable Long userId) {
+    public ResponseEntity<?> getUserBookingsCount(@PathVariable String userId) {
         try {
             long count = diagnosticsBookingService.getUserBookingsCount(userId);
             return ResponseEntity.ok(count);
