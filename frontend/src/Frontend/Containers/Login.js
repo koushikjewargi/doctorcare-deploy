@@ -36,7 +36,7 @@ const Login = () => {
   };
 
   // ==========================================
-  // NEW: SPRING BOOT LOGIN API CALL
+  // UPGRADED: SPRING BOOT LOGIN API CALL
   // ==========================================
   const handleLogin = async (e) => {
     e.preventDefault();
@@ -58,23 +58,27 @@ const Login = () => {
       });
 
       if (response.ok) {
-        // Backend said 200 OK! Passwords match!
+        // 1. Read the JSON data Spring Boot just sent us!
+        const userData = await response.json(); 
         
-        // Auto-detect role for routing (we will upgrade this to JWT later)
-        let role = "Patient";
-        let targetPath = "/menu";
+        // 2. Grab the exact role from the database
+        const userRole = userData.role || "Patient"; 
+        
+        let targetPath = "/menu"; // Default for patients
 
-        if (cleanEmail.includes("admin")) {
-            role = "Admin";
+        // 3. Route them based on their TRUE role (converted to lowercase to avoid typo bugs)
+        const roleCheck = userRole.toLowerCase();
+        
+        if (roleCheck === "admin") {
             targetPath = "/admin-dashboard";
-        } else if (cleanEmail.includes("doctor")) {
-            role = "Doctor";
+        } else if (roleCheck === "doctor") {
             targetPath = "/doctor-dashboard";
         }
 
-        // Save session data so React knows you are logged in
-        localStorage.setItem("role", role);
-        localStorage.setItem("userEmail", cleanEmail);
+        // 4. Save their official info to memory
+        localStorage.setItem("role", userRole);
+        localStorage.setItem("userName", userData.name);
+        localStorage.setItem("userEmail", userData.email);
         
         setIsLoading(false);
         navigate(targetPath);
@@ -93,7 +97,7 @@ const Login = () => {
   };
 
   // ==========================================
-  // NEW: SPRING BOOT REGISTER API CALL
+  // SPRING BOOT REGISTER API CALL
   // ==========================================
   const handleRegister = async (e) => {
     e.preventDefault();
@@ -277,7 +281,7 @@ const Login = () => {
               {activeTab === "login" && (
                 <div style={styles.forgotRow}>
                    <label style={{display: 'flex', alignItems: 'center', gap: '5px', fontSize: '13px', color: '#666'}}>
-                     <input type="checkbox" /> Remember me
+                     <input type="checkbox" /> Remember me 
                    </label>
                    <span onClick={() => navigate('/forgot-password')} style={styles.forgotLink}>Forgot Password?</span>
                 </div>
@@ -299,7 +303,6 @@ const Login = () => {
   );
 };
 
-// I kept your exact styles down here so nothing breaks visually!
 const styles = {
   pageContainer: { minHeight: 'calc(100vh - 70px)', display: 'flex', flexDirection: 'column', backgroundColor: '#fff', fontFamily: "'Inter', sans-serif", justifyContent: 'center', alignItems: 'center', padding: '20px' },
   contentWrapper: { flex: 1, display: 'flex', alignItems: 'center', justifyContent: 'center', width: '100%' },
