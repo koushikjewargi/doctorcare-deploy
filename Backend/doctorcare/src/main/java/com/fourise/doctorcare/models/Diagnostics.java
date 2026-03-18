@@ -1,50 +1,38 @@
 package com.fourise.doctorcare.models;
 
-import jakarta.persistence.*;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import org.springframework.data.annotation.Id;
+import org.springframework.data.mongodb.core.mapping.Document;
 
-@Entity
-@Table(name = "diagnostics")
+@Document(collection = "diagnostics")
 public class Diagnostics {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    private String id;
 
-    @Column(nullable = false)
-    private Long userId;
+    private String userId;
 
-    @Column(nullable = false)
     private String testName;
 
-    @Column(length = 500)
     private String description;
 
-    @Column(nullable = false)
     private Double cost;
 
-    @Enumerated(EnumType.STRING)
-    @Column(nullable = false)
     private DiagnosticsStatus status;
 
-    @Column(nullable = false)
     private LocalDate bookingDate;
 
     private LocalDate completionDate;
 
-    @Column(nullable = false)
     private LocalDateTime createdAt;
 
     private LocalDateTime updatedAt;
 
-    @Column(length = 1000)
     private String result;
 
-    @Column(nullable = false)
     private Boolean paymentDone = false;
 
-    @Column(length = 500)
     private String notes;
 
     // Constructors
@@ -53,7 +41,7 @@ public class Diagnostics {
         this.status = DiagnosticsStatus.PENDING;
     }
 
-    public Diagnostics(Long userId, String testName, String description, Double cost, LocalDate bookingDate) {
+    public Diagnostics(String userId, String testName, String description, Double cost, LocalDate bookingDate) {
         this();
         this.userId = userId;
         this.testName = testName;
@@ -63,19 +51,19 @@ public class Diagnostics {
     }
 
     // Getters and Setters
-    public Long getId() {
+    public String getId() {
         return id;
     }
 
-    public void setId(Long id) {
+    public void setId(String id) {
         this.id = id;
     }
 
-    public Long getUserId() {
+    public String getUserId() {
         return userId;
     }
 
-    public void setUserId(Long userId) {
+    public void setUserId(String userId) {
         this.userId = userId;
     }
 

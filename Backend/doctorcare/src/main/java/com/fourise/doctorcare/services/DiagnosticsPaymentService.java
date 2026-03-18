@@ -18,24 +18,24 @@ public class DiagnosticsPaymentService {
     private DiagnosticsPaymentRepository diagnosticsPaymentRepository;
 
     // Create a payment record
-    public DiagnosticsPayment createPayment(Long diagnosticsId, Long userId, Double amount, String paymentMethod) {
+    public DiagnosticsPayment createPayment(String diagnosticsId, String userId, Double amount, String paymentMethod) {
         DiagnosticsPayment payment = new DiagnosticsPayment(diagnosticsId, userId, amount, paymentMethod);
         payment.setTransactionId(generateTransactionId());
         return diagnosticsPaymentRepository.save(payment);
     }
 
     // Get all payments for a user
-    public List<DiagnosticsPayment> getUserPayments(Long userId) {
+    public List<DiagnosticsPayment> getUserPayments(String userId) {
         return diagnosticsPaymentRepository.findByUserIdOrderByPaymentDateDesc(userId);
     }
 
     // Get payment by ID
-    public Optional<DiagnosticsPayment> getPaymentById(Long id) {
+    public Optional<DiagnosticsPayment> getPaymentById(String id) {
         return diagnosticsPaymentRepository.findById(id);
     }
 
     // Get payment by ID and userId for security
-    public Optional<DiagnosticsPayment> getPaymentByIdAndUserId(Long id, Long userId) {
+    public Optional<DiagnosticsPayment> getPaymentByIdAndUserId(String id, String userId) {
         return diagnosticsPaymentRepository.findByIdAndUserId(id, userId);
     }
 
@@ -45,7 +45,7 @@ public class DiagnosticsPaymentService {
     }
 
     // Get all payments for a specific diagnostic
-    public List<DiagnosticsPayment> getDiagnosticsPayments(Long diagnosticsId) {
+    public List<DiagnosticsPayment> getDiagnosticsPayments(String diagnosticsId) {
         return diagnosticsPaymentRepository.findByDiagnosticsId(diagnosticsId);
     }
 
@@ -55,12 +55,12 @@ public class DiagnosticsPaymentService {
     }
 
     // Get user payments with specific status
-    public List<DiagnosticsPayment> getUserPaymentsByStatus(Long userId, PaymentStatus status) {
+    public List<DiagnosticsPayment> getUserPaymentsByStatus(String userId, PaymentStatus status) {
         return diagnosticsPaymentRepository.findByUserIdAndPaymentStatus(userId, status);
     }
 
     // Process payment
-    public DiagnosticsPayment processPayment(Long id, PaymentStatus status) {
+    public DiagnosticsPayment processPayment(String id, PaymentStatus status) {
         Optional<DiagnosticsPayment> payment = diagnosticsPaymentRepository.findById(id);
         if (payment.isPresent()) {
             DiagnosticsPayment pay = payment.get();
@@ -73,17 +73,17 @@ public class DiagnosticsPaymentService {
     }
 
     // Complete payment
-    public DiagnosticsPayment completePayment(Long id) {
+    public DiagnosticsPayment completePayment(String id) {
         return processPayment(id, PaymentStatus.COMPLETED);
     }
 
     // Fail payment
-    public DiagnosticsPayment failPayment(Long id) {
+    public DiagnosticsPayment failPayment(String id) {
         return processPayment(id, PaymentStatus.FAILED);
     }
 
     // Refund payment
-    public DiagnosticsPayment refundPayment(Long id) {
+    public DiagnosticsPayment refundPayment(String id) {
         Optional<DiagnosticsPayment> payment = diagnosticsPaymentRepository.findById(id);
         if (payment.isPresent()) {
             DiagnosticsPayment pay = payment.get();
@@ -95,7 +95,7 @@ public class DiagnosticsPaymentService {
     }
 
     // Cancel payment
-    public DiagnosticsPayment cancelPayment(Long id) {
+    public DiagnosticsPayment cancelPayment(String id) {
         Optional<DiagnosticsPayment> payment = diagnosticsPaymentRepository.findById(id);
         if (payment.isPresent()) {
             DiagnosticsPayment pay = payment.get();
@@ -107,7 +107,7 @@ public class DiagnosticsPaymentService {
     }
 
     // Update payment description
-    public DiagnosticsPayment updatePaymentDescription(Long id, String description) {
+    public DiagnosticsPayment updatePaymentDescription(String id, String description) {
         Optional<DiagnosticsPayment> payment = diagnosticsPaymentRepository.findById(id);
         if (payment.isPresent()) {
             DiagnosticsPayment pay = payment.get();
@@ -119,17 +119,17 @@ public class DiagnosticsPaymentService {
     }
 
     // Get pending payments for user
-    public List<DiagnosticsPayment> getUserPendingPayments(Long userId) {
+    public List<DiagnosticsPayment> getUserPendingPayments(String userId) {
         return diagnosticsPaymentRepository.findByUserIdAndPaymentStatus(userId, PaymentStatus.PENDING);
     }
 
     // Get completed payments for user
-    public List<DiagnosticsPayment> getUserCompletedPayments(Long userId) {
+    public List<DiagnosticsPayment> getUserCompletedPayments(String userId) {
         return diagnosticsPaymentRepository.findByUserIdAndPaymentStatus(userId, PaymentStatus.COMPLETED);
     }
 
     // Delete payment record
-    public boolean deletePayment(Long id) {
+    public boolean deletePayment(String id) {
         try {
             diagnosticsPaymentRepository.deleteById(id);
             return true;
@@ -139,7 +139,7 @@ public class DiagnosticsPaymentService {
     }
 
     // Count total payments for user
-    public long getUserPaymentsCount(Long userId) {
+    public long getUserPaymentsCount(String userId) {
         return diagnosticsPaymentRepository.countByUserId(userId);
     }
 

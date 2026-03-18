@@ -24,7 +24,7 @@ public class DiagnosticsController {
     // Book a new diagnostic test
     @PostMapping("/book")
     public ResponseEntity<?> bookDiagnostic(
-            @RequestParam Long userId,
+            @RequestParam String userId,
             @RequestParam String testName,
             @RequestParam(required = false) String description,
             @RequestParam Double cost,
@@ -39,7 +39,7 @@ public class DiagnosticsController {
 
     // Get all diagnostics for a user
     @GetMapping("/user/{userId}")
-    public ResponseEntity<?> getUserDiagnostics(@PathVariable Long userId) {
+    public ResponseEntity<?> getUserDiagnostics(@PathVariable String userId) {
         try {
             List<Diagnostics> diagnostics = diagnosticsService.getUserDiagnostics(userId);
             return ResponseEntity.ok(diagnostics);
@@ -50,7 +50,7 @@ public class DiagnosticsController {
 
     // Get diagnostic by ID
     @GetMapping("/{id}")
-    public ResponseEntity<?> getDiagnosticsById(@PathVariable Long id) {
+    public ResponseEntity<?> getDiagnosticsById(@PathVariable String id) {
         try {
             Optional<Diagnostics> diagnostics = diagnosticsService.getDiagnosticsById(id);
             if (diagnostics.isPresent()) {
@@ -65,7 +65,7 @@ public class DiagnosticsController {
 
     // Get diagnostic by ID and userId
     @GetMapping("/{id}/user/{userId}")
-    public ResponseEntity<?> getDiagnosticsByIdAndUserId(@PathVariable Long id, @PathVariable Long userId) {
+    public ResponseEntity<?> getDiagnosticsByIdAndUserId(@PathVariable String id, @PathVariable String userId) {
         try {
             Optional<Diagnostics> diagnostics = diagnosticsService.getDiagnosticsByIdAndUserId(id, userId);
             if (diagnostics.isPresent()) {
@@ -91,7 +91,7 @@ public class DiagnosticsController {
 
     // Get user diagnostics by status
     @GetMapping("/user/{userId}/status/{status}")
-    public ResponseEntity<?> getUserDiagnosticsByStatus(@PathVariable Long userId, @PathVariable DiagnosticsStatus status) {
+    public ResponseEntity<?> getUserDiagnosticsByStatus(@PathVariable String userId, @PathVariable DiagnosticsStatus status) {
         try {
             List<Diagnostics> diagnostics = diagnosticsService.getUserDiagnosticsByStatus(userId, status);
             return ResponseEntity.ok(diagnostics);
@@ -113,7 +113,7 @@ public class DiagnosticsController {
 
     // Get pending payment diagnostics for user
     @GetMapping("/user/{userId}/pending-payment")
-    public ResponseEntity<?> getPendingPaymentDiagnostics(@PathVariable Long userId) {
+    public ResponseEntity<?> getPendingPaymentDiagnostics(@PathVariable String userId) {
         try {
             List<Diagnostics> diagnostics = diagnosticsService.getPendingPaymentDiagnostics(userId);
             return ResponseEntity.ok(diagnostics);
@@ -135,7 +135,7 @@ public class DiagnosticsController {
 
     // Update diagnostic status
     @PutMapping("/{id}/status/{status}")
-    public ResponseEntity<?> updateDiagnosticsStatus(@PathVariable Long id, @PathVariable DiagnosticsStatus status) {
+    public ResponseEntity<?> updateDiagnosticsStatus(@PathVariable String id, @PathVariable DiagnosticsStatus status) {
         try {
             Diagnostics diagnostics = diagnosticsService.updateDiagnosticsStatus(id, status);
             if (diagnostics != null) {
@@ -150,7 +150,7 @@ public class DiagnosticsController {
 
     // Add test results
     @PutMapping("/{id}/result")
-    public ResponseEntity<?> addTestResults(@PathVariable Long id, @RequestBody String result) {
+    public ResponseEntity<?> addTestResults(@PathVariable String id, @RequestBody String result) {
         try {
             Diagnostics diagnostics = diagnosticsService.addTestResults(id, result);
             if (diagnostics != null) {
@@ -165,7 +165,7 @@ public class DiagnosticsController {
 
     // Update payment status
     @PutMapping("/{id}/payment")
-    public ResponseEntity<?> updatePaymentStatus(@PathVariable Long id, @RequestParam Boolean paid) {
+    public ResponseEntity<?> updatePaymentStatus(@PathVariable String id, @RequestParam Boolean paid) {
         try {
             Diagnostics diagnostics = diagnosticsService.updatePaymentStatus(id, paid);
             if (diagnostics != null) {
@@ -180,7 +180,7 @@ public class DiagnosticsController {
 
     // Add notes to diagnostic
     @PutMapping("/{id}/notes")
-    public ResponseEntity<?> addNotes(@PathVariable Long id, @RequestBody String notes) {
+    public ResponseEntity<?> addNotes(@PathVariable String id, @RequestBody String notes) {
         try {
             Diagnostics diagnostics = diagnosticsService.addNotes(id, notes);
             if (diagnostics != null) {
@@ -195,7 +195,7 @@ public class DiagnosticsController {
 
     // Cancel diagnostic
     @PutMapping("/{id}/cancel")
-    public ResponseEntity<?> cancelDiagnostics(@PathVariable Long id) {
+    public ResponseEntity<?> cancelDiagnostics(@PathVariable String id) {
         try {
             Diagnostics diagnostics = diagnosticsService.cancelDiagnostics(id);
             if (diagnostics != null) {
@@ -210,7 +210,7 @@ public class DiagnosticsController {
 
     // Get completed diagnostics history for user
     @GetMapping("/user/{userId}/history")
-    public ResponseEntity<?> getCompletedDiagnostics(@PathVariable Long userId) {
+    public ResponseEntity<?> getCompletedDiagnostics(@PathVariable String userId) {
         try {
             List<Diagnostics> diagnostics = diagnosticsService.getCompletedDiagnostics(userId);
             return ResponseEntity.ok(diagnostics);
@@ -221,7 +221,7 @@ public class DiagnosticsController {
 
     // Delete diagnostic
     @DeleteMapping("/{id}")
-    public ResponseEntity<?> deleteDiagnostics(@PathVariable Long id) {
+    public ResponseEntity<?> deleteDiagnostics(@PathVariable String id) {
         try {
             boolean deleted = diagnosticsService.deleteDiagnostics(id);
             if (deleted) {
@@ -236,7 +236,7 @@ public class DiagnosticsController {
 
     // Get count of diagnostics for user
     @GetMapping("/user/{userId}/count")
-    public ResponseEntity<?> getUserDiagnosticsCount(@PathVariable Long userId) {
+    public ResponseEntity<?> getUserDiagnosticsCount(@PathVariable String userId) {
         try {
             long count = diagnosticsService.getUserDiagnosticsCount(userId);
             return ResponseEntity.ok(count);

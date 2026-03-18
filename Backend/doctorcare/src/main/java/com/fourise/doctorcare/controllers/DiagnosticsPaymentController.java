@@ -22,8 +22,8 @@ public class DiagnosticsPaymentController {
     // Create a payment record
     @PostMapping("/create")
     public ResponseEntity<?> createPayment(
-            @RequestParam Long diagnosticsId,
-            @RequestParam Long userId,
+            @RequestParam String diagnosticsId,
+            @RequestParam String userId,
             @RequestParam Double amount,
             @RequestParam String paymentMethod) {
         try {
@@ -36,7 +36,7 @@ public class DiagnosticsPaymentController {
 
     // Get all payments for a user
     @GetMapping("/user/{userId}")
-    public ResponseEntity<?> getUserPayments(@PathVariable Long userId) {
+    public ResponseEntity<?> getUserPayments(@PathVariable String userId) {
         try {
             List<DiagnosticsPayment> payments = diagnosticsPaymentService.getUserPayments(userId);
             return ResponseEntity.ok(payments);
@@ -47,7 +47,7 @@ public class DiagnosticsPaymentController {
 
     // Get payment by ID
     @GetMapping("/{id}")
-    public ResponseEntity<?> getPaymentById(@PathVariable Long id) {
+    public ResponseEntity<?> getPaymentById(@PathVariable String id) {
         try {
             Optional<DiagnosticsPayment> payment = diagnosticsPaymentService.getPaymentById(id);
             if (payment.isPresent()) {
@@ -62,7 +62,7 @@ public class DiagnosticsPaymentController {
 
     // Get payment by ID and userId
     @GetMapping("/{id}/user/{userId}")
-    public ResponseEntity<?> getPaymentByIdAndUserId(@PathVariable Long id, @PathVariable Long userId) {
+    public ResponseEntity<?> getPaymentByIdAndUserId(@PathVariable String id, @PathVariable String userId) {
         try {
             Optional<DiagnosticsPayment> payment = diagnosticsPaymentService.getPaymentByIdAndUserId(id, userId);
             if (payment.isPresent()) {
@@ -92,7 +92,7 @@ public class DiagnosticsPaymentController {
 
     // Get all payments for a diagnostic
     @GetMapping("/diagnostic/{diagnosticsId}")
-    public ResponseEntity<?> getDiagnosticsPayments(@PathVariable Long diagnosticsId) {
+    public ResponseEntity<?> getDiagnosticsPayments(@PathVariable String diagnosticsId) {
         try {
             List<DiagnosticsPayment> payments = diagnosticsPaymentService.getDiagnosticsPayments(diagnosticsId);
             return ResponseEntity.ok(payments);
@@ -114,7 +114,7 @@ public class DiagnosticsPaymentController {
 
     // Get user payments by status
     @GetMapping("/user/{userId}/status/{status}")
-    public ResponseEntity<?> getUserPaymentsByStatus(@PathVariable Long userId, @PathVariable PaymentStatus status) {
+    public ResponseEntity<?> getUserPaymentsByStatus(@PathVariable String userId, @PathVariable PaymentStatus status) {
         try {
             List<DiagnosticsPayment> payments = diagnosticsPaymentService.getUserPaymentsByStatus(userId, status);
             return ResponseEntity.ok(payments);
@@ -126,7 +126,7 @@ public class DiagnosticsPaymentController {
     // Process payment (update status)
     @PutMapping("/{id}/process")
     public ResponseEntity<?> processPayment(
-            @PathVariable Long id,
+            @PathVariable String id,
             @RequestParam PaymentStatus status) {
         try {
             DiagnosticsPayment payment = diagnosticsPaymentService.processPayment(id, status);
@@ -142,7 +142,7 @@ public class DiagnosticsPaymentController {
 
     // Complete payment
     @PutMapping("/{id}/complete")
-    public ResponseEntity<?> completePayment(@PathVariable Long id) {
+    public ResponseEntity<?> completePayment(@PathVariable String id) {
         try {
             DiagnosticsPayment payment = diagnosticsPaymentService.completePayment(id);
             if (payment != null) {
@@ -157,7 +157,7 @@ public class DiagnosticsPaymentController {
 
     // Fail payment
     @PutMapping("/{id}/fail")
-    public ResponseEntity<?> failPayment(@PathVariable Long id) {
+    public ResponseEntity<?> failPayment(@PathVariable String id) {
         try {
             DiagnosticsPayment payment = diagnosticsPaymentService.failPayment(id);
             if (payment != null) {
@@ -172,7 +172,7 @@ public class DiagnosticsPaymentController {
 
     // Refund payment
     @PutMapping("/{id}/refund")
-    public ResponseEntity<?> refundPayment(@PathVariable Long id) {
+    public ResponseEntity<?> refundPayment(@PathVariable String id) {
         try {
             DiagnosticsPayment payment = diagnosticsPaymentService.refundPayment(id);
             if (payment != null) {
@@ -187,7 +187,7 @@ public class DiagnosticsPaymentController {
 
     // Cancel payment
     @PutMapping("/{id}/cancel")
-    public ResponseEntity<?> cancelPayment(@PathVariable Long id) {
+    public ResponseEntity<?> cancelPayment(@PathVariable String id) {
         try {
             DiagnosticsPayment payment = diagnosticsPaymentService.cancelPayment(id);
             if (payment != null) {
@@ -202,7 +202,7 @@ public class DiagnosticsPaymentController {
 
     // Update payment description
     @PutMapping("/{id}/description")
-    public ResponseEntity<?> updatePaymentDescription(@PathVariable Long id, @RequestBody String description) {
+    public ResponseEntity<?> updatePaymentDescription(@PathVariable String id, @RequestBody String description) {
         try {
             DiagnosticsPayment payment = diagnosticsPaymentService.updatePaymentDescription(id, description);
             if (payment != null) {
@@ -217,7 +217,7 @@ public class DiagnosticsPaymentController {
 
     // Get pending payments for user
     @GetMapping("/user/{userId}/pending")
-    public ResponseEntity<?> getUserPendingPayments(@PathVariable Long userId) {
+    public ResponseEntity<?> getUserPendingPayments(@PathVariable String userId) {
         try {
             List<DiagnosticsPayment> payments = diagnosticsPaymentService.getUserPendingPayments(userId);
             return ResponseEntity.ok(payments);
@@ -228,7 +228,7 @@ public class DiagnosticsPaymentController {
 
     // Get completed payments for user
     @GetMapping("/user/{userId}/completed")
-    public ResponseEntity<?> getUserCompletedPayments(@PathVariable Long userId) {
+    public ResponseEntity<?> getUserCompletedPayments(@PathVariable String userId) {
         try {
             List<DiagnosticsPayment> payments = diagnosticsPaymentService.getUserCompletedPayments(userId);
             return ResponseEntity.ok(payments);
@@ -239,7 +239,7 @@ public class DiagnosticsPaymentController {
 
     // Delete payment record
     @DeleteMapping("/{id}")
-    public ResponseEntity<?> deletePayment(@PathVariable Long id) {
+    public ResponseEntity<?> deletePayment(@PathVariable String id) {
         try {
             boolean deleted = diagnosticsPaymentService.deletePayment(id);
             if (deleted) {
@@ -254,7 +254,7 @@ public class DiagnosticsPaymentController {
 
     // Get count of payments for user
     @GetMapping("/user/{userId}/count")
-    public ResponseEntity<?> getUserPaymentsCount(@PathVariable Long userId) {
+    public ResponseEntity<?> getUserPaymentsCount(@PathVariable String userId) {
         try {
             long count = diagnosticsPaymentService.getUserPaymentsCount(userId);
             return ResponseEntity.ok(count);

@@ -18,23 +18,23 @@ public class DiagnosticsService {
     private DiagnosticsRepository diagnosticsRepository;
 
     // Create or Book a new diagnostic test
-    public Diagnostics bookDiagnosticTest(Long userId, String testName, String description, Double cost, LocalDate bookingDate) {
+    public Diagnostics bookDiagnosticTest(String userId, String testName, String description, Double cost, LocalDate bookingDate) {
         Diagnostics diagnostics = new Diagnostics(userId, testName, description, cost, bookingDate);
         return diagnosticsRepository.save(diagnostics);
     }
 
     // Get all diagnostic tests for a user
-    public List<Diagnostics> getUserDiagnostics(Long userId) {
+    public List<Diagnostics> getUserDiagnostics(String userId) {
         return diagnosticsRepository.findByUserIdOrderByCreatedAtDesc(userId);
     }
 
     // Get diagnostic test by ID
-    public Optional<Diagnostics> getDiagnosticsById(Long id) {
+    public Optional<Diagnostics> getDiagnosticsById(String id) {
         return diagnosticsRepository.findById(id);
     }
 
     // Get diagnostic test by ID and userId for security
-    public Optional<Diagnostics> getDiagnosticsByIdAndUserId(Long id, Long userId) {
+    public Optional<Diagnostics> getDiagnosticsByIdAndUserId(String id, String userId) {
         return diagnosticsRepository.findByIdAndUserId(id, userId);
     }
 
@@ -44,7 +44,7 @@ public class DiagnosticsService {
     }
 
     // Get user's diagnostics with specific status
-    public List<Diagnostics> getUserDiagnosticsByStatus(Long userId, DiagnosticsStatus status) {
+    public List<Diagnostics> getUserDiagnosticsByStatus(String userId, DiagnosticsStatus status) {
         return diagnosticsRepository.findByUserIdAndStatus(userId, status);
     }
 
@@ -54,12 +54,12 @@ public class DiagnosticsService {
     }
 
     // Get pending payment diagnostics for a user
-    public List<Diagnostics> getPendingPaymentDiagnostics(Long userId) {
+    public List<Diagnostics> getPendingPaymentDiagnostics(String userId) {
         return diagnosticsRepository.findByUserIdAndPaymentDone(userId, false);
     }
 
     // Update diagnostic status
-    public Diagnostics updateDiagnosticsStatus(Long id, DiagnosticsStatus status) {
+    public Diagnostics updateDiagnosticsStatus(String id, DiagnosticsStatus status) {
         Optional<Diagnostics> diagnostics = diagnosticsRepository.findById(id);
         if (diagnostics.isPresent()) {
             Diagnostics diag = diagnostics.get();
@@ -74,7 +74,7 @@ public class DiagnosticsService {
     }
 
     // Add test results
-    public Diagnostics addTestResults(Long id, String result) {
+    public Diagnostics addTestResults(String id, String result) {
         Optional<Diagnostics> diagnostics = diagnosticsRepository.findById(id);
         if (diagnostics.isPresent()) {
             Diagnostics diag = diagnostics.get();
@@ -88,7 +88,7 @@ public class DiagnosticsService {
     }
 
     // Update payment status
-    public Diagnostics updatePaymentStatus(Long id, Boolean paid) {
+    public Diagnostics updatePaymentStatus(String id, Boolean paid) {
         Optional<Diagnostics> diagnostics = diagnosticsRepository.findById(id);
         if (diagnostics.isPresent()) {
             Diagnostics diag = diagnostics.get();
@@ -103,7 +103,7 @@ public class DiagnosticsService {
     }
 
     // Add notes
-    public Diagnostics addNotes(Long id, String notes) {
+    public Diagnostics addNotes(String id, String notes) {
         Optional<Diagnostics> diagnostics = diagnosticsRepository.findById(id);
         if (diagnostics.isPresent()) {
             Diagnostics diag = diagnostics.get();
@@ -115,7 +115,7 @@ public class DiagnosticsService {
     }
 
     // Cancel diagnostic test
-    public Diagnostics cancelDiagnostics(Long id) {
+    public Diagnostics cancelDiagnostics(String id) {
         Optional<Diagnostics> diagnostics = diagnosticsRepository.findById(id);
         if (diagnostics.isPresent()) {
             Diagnostics diag = diagnostics.get();
@@ -127,12 +127,12 @@ public class DiagnosticsService {
     }
 
     // Get history of completed diagnostics
-    public List<Diagnostics> getCompletedDiagnostics(Long userId) {
+    public List<Diagnostics> getCompletedDiagnostics(String userId) {
         return diagnosticsRepository.findByUserIdAndStatus(userId, DiagnosticsStatus.COMPLETED);
     }
 
     // Delete diagnostic record
-    public boolean deleteDiagnostics(Long id) {
+    public boolean deleteDiagnostics(String id) {
         try {
             diagnosticsRepository.deleteById(id);
             return true;
@@ -142,7 +142,7 @@ public class DiagnosticsService {
     }
 
     // Count total diagnostics for user
-    public long getUserDiagnosticsCount(Long userId) {
+    public long getUserDiagnosticsCount(String userId) {
         return diagnosticsRepository.countByUserId(userId);
     }
 
