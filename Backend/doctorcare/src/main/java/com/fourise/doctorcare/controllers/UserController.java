@@ -30,12 +30,9 @@ public class UserController {
     // --- UPGRADED LOGIN API ---
     @PostMapping("/login")
     public ResponseEntity<?> loginUser(@RequestBody User loginData) {
-        
-        // Pass the email and password from Postman/React to our Service
         User loggedInUser = userService.loginUser(loginData.getEmail(), loginData.getPassword());
         
         if (loggedInUser != null) {
-            // Build a professional JSON response with the user's true role
             Map<String, String> response = new HashMap<>();
             response.put("message", "Login Successful");
             response.put("name", loggedInUser.getName());
@@ -45,6 +42,39 @@ public class UserController {
             return ResponseEntity.ok(response);
         } else {
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Error: Invalid email or password");
+        }
+    }
+
+    // ==========================================
+    // --- NEW: FORGOT PASSWORD APIs ---
+    // ==========================================
+
+    // API 1: Get the Security Question
+    @GetMapping("/get-security-question/{email}")
+    public ResponseEntity<?> getSecurityQuestion(@PathVariable String email) {
+        String question = userService.getSecurityQuestion(email);
+        if (question != null) {
+            // Send back as JSON so React can read it easily
+            Map<String, String> response = new HashMap<>();
+            response.put("question", question);
+            return ResponseEntity.ok(response);
+        }
+        return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Error: Email not found in our system.");
+    }
+
+    // API 2: Validate Answer and Reset Password
+    @PostMapping("/reset-password")
+    public ResponseEntity<?> resetPassword(@RequestBody Map<String, String> request) {
+        String email = request.get("email");
+        String answer = request.get("securityAnswer");
+        String newPassword = request.get("newPassword");
+
+        boolean isReset = userService.resetPassword(email, answer, newPassword);
+        
+        if (isReset) {
+            return ResponseEntity.ok("Success: Password has been reset! You can now log in.");
+        } else {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Error: Incorrect security answer.");
         }
     }
 }

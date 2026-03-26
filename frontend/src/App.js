@@ -14,8 +14,6 @@ import Splash from './Frontend/Containers/Splash';
 import Onboarding from './Frontend/Containers/Onboarding';
 import Login from './Frontend/Containers/Login';
 import ForgotPassword from './Frontend/Containers/ForgotPassword';
-import SecurityQuestions from './Frontend/Containers/SecurityQuestions';
-import ResetPassword from './Frontend/Containers/ResetPassword';
 
 // --- SYSTEM PAGES ---
 import Feedback from './Frontend/Containers/Feedback';
@@ -41,9 +39,6 @@ import PatientDetails from './Frontend/Containers/PatientDetails';
 // --- DIAGNOSTICS ---
 import DiagnosticsRoutes from './Frontend/Containers/Diagnostics/Routes';
 
-  
-
-
 // 🔒 PROTECTED ROUTE COMPONENT (The Gatekeeper)
 const ProtectedRoute = ({ children }) => {
   const role = localStorage.getItem('role');
@@ -65,11 +60,8 @@ const Layout = ({ children }) => {
     '/', 
     '/onboarding', 
     '/login', 
-    '/forgot-password', 
-    '/security-questions', 
-    '/reset-password'
+    '/forgot-password'
   ]; 
-  
   
   const showHeaderFooter = !hideLayout.includes(location.pathname);
 
@@ -103,8 +95,6 @@ function App() {
           <Route path="/onboarding" element={<Onboarding />} />
           <Route path="/login" element={<Login />} />
           <Route path="/forgot-password" element={<ForgotPassword />} />
-          <Route path="/security-questions" element={<SecurityQuestions />} />
-          <Route path="/reset-password" element={<ResetPassword />} />
 
           {/* === PROTECTED ROUTES (Login Required) === */}
           {/* Use ProtectedRoute wrapper for ALL internal pages */}
