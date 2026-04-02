@@ -51,7 +51,7 @@ const Login = () => {
     const cleanEmail = email.toLowerCase();
 
     try {
-      const response = await fetch("http://localhost:8085/api/users/login", {
+      const response = await fetch("https://doctorcare-deploy-production.up.railway.app/api/users/login", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ email: cleanEmail, password: password })
@@ -141,7 +141,7 @@ const Login = () => {
     };
 
     try {
-      const response = await fetch("http://localhost:8085/api/users/register", {
+      const response = await fetch("https://doctorcare-deploy-production.up.railway.app/api/users/register", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(userData)

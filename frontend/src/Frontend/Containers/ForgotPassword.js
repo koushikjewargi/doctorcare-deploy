@@ -31,7 +31,7 @@ const ForgotPassword = () => {
     }
 
     try {
-      const response = await fetch(`http://localhost:8085/api/users/get-security-question/${email}`);
+      const response = await fetch(`https://doctorcare-deploy-production.up.railway.app/api/users/get-security-question/${email}`);
       if (response.ok) {
         const data = await response.json();
         setSecurityQuestion(data.question);
@@ -61,7 +61,7 @@ const ForgotPassword = () => {
     }
 
     try {
-      const response = await fetch("http://localhost:8085/api/users/reset-password", {
+      const response = await fetch("https://doctorcare-deploy-production.up.railway.app/api/users/reset-password", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ 
