@@ -11,10 +11,6 @@ import org.springframework.security.config.Customizer;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.web.SecurityFilterChain;
-import org.springframework.web.cors.CorsConfiguration;
-import org.springframework.web.cors.CorsConfigurationSource;
-import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
-
 import java.util.Arrays;
 
 @Configuration
@@ -24,13 +20,10 @@ public class SecurityConfig {
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http
-            // 1. Turn on the CORS bouncer (He will look at the Bean below for the rules)
             .cors(Customizer.withDefaults()) 
             .csrf(csrf -> csrf.disable()) 
             .authorizeHttpRequests(auth -> auth
-                // 3. Allow "OPTIONS" requests (Browsers send these automatically to check CORS rules)
                 .requestMatchers(HttpMethod.OPTIONS, "/**").permitAll() 
-                // Keep the API open while authentication is not fully implemented.
                 .requestMatchers("/api/**").permitAll()
                 .anyRequest().permitAll()
             );
@@ -38,23 +31,23 @@ public class SecurityConfig {
         return http.build();
     }
 
-    // --- NEW: THE VIP GUEST LIST ---
     @Bean
     public CorsConfigurationSource corsConfigurationSource() {
         CorsConfiguration configuration = new CorsConfiguration();
         
-        // Put your React frontend ports here (React uses 3000, Vite uses 5173)
-        configuration.setAllowedOrigins(Arrays.asList("http://localhost:3000", "http://localhost:5173")); 
+        // --- THE VERCEL LINK IS NOW ON THE VIP LIST ---
+        configuration.setAllowedOrigins(Arrays.asList(
+            "http://localhost:3000", 
+            "http://localhost:5173",
+            "https://doctorcare-deploy.vercel.app"
+        )); 
         
-        // Allow these specific types of requests
         configuration.setAllowedMethods(Arrays.asList("GET", "POST", "PUT", "DELETE", "OPTIONS"));
-        
-        // Allow headers like JWT Tokens to pass through
         configuration.setAllowedHeaders(Arrays.asList("Authorization", "Content-Type"));
         configuration.setAllowCredentials(true);
 
         UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
-        source.registerCorsConfiguration("/**", configuration); // Apply these rules to ALL backend URLs
+        source.registerCorsConfiguration("/**", configuration);
         return source;
     }
 }
