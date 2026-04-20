@@ -9,6 +9,7 @@ import com.fourise.doctorcare.services.UserService;
 
 import java.util.HashMap;
 import java.util.Map;
+
 @CrossOrigin(origins = "*")
 @RestController
 @RequestMapping("/api/users")
